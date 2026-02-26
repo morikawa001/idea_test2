@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>医療をよくするアイデア＆お困りごと提案フォーム</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+  background: #f0f4f8;
+  color: #333;
+  padding: 20px;
+  min-height: 100vh;
+}
+.container { max-width: 720px; margin: 0 auto; }
+
+.header {
+  background: linear-gradient(135deg, #1a5276, #2e86c1);
+  color: white;
+  padding: 24px 28px;
+  border-radius: 12px 12px 0 0;
+  text-align: center;
+}
+.header h1 { font-size: 1.4em; margin-bottom: 6px; }
+.header p  { font-size: 0.85em; opacity: 0.88; }
+
+.stepper {
+  display: flex;
+  background: white;
+  padding: 14px 20px;
+  gap: 4px;
+  align-items: center;
+  border-bottom: 1px solid #d6eaf8;
+  overflow-x: auto;
+}
+.step-dot {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 4px; flex: 1; min-width: 44px;
+}
+.step-circle {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: #d6eaf8;
+  color: #7fb3d3;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75em; font-weight: bold;
+  transition: all 0.4s;
+}
+.step-circle.done   { background: #27ae60; color: white; }
+.step-circle.active { background: #2e86c1; color: white; box-shadow: 0 0 0 4px #aed6f1; }
+.step-label { font-size: 0.65em; color: #888; text-align: center; }
+.step-label.active { color: #1a5276; font-weight: bold; }
+.step-line { height: 2px; background: #d6eaf8; flex: 0.3; border-radius: 1px; }
+.step-line.done { background: #27ae60; }
+
+.progress-bar-wrap {
+  background: #eaf4fb;
+  padding: 8px 20px;
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.82em; color: #1a5276;
+}
+.progress-bar-bg {
+  flex: 1; height: 8px;
+  background: #aed6f1; border-radius: 4px; overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, #2e86c1, #27ae60);
+  border-radius: 4px; transition: width 0.5s ease;
+}
+
+.navigator {
+  display: flex; align-items: flex-start; gap: 12px;
+  background: white;
+  padding: 16px 20px;
+  border-bottom: 1px solid #eaf4fb;
+  animation: fadeSlideIn 0.4s ease;
+}
+.nav-avatar {
+  font-size: 2.2em; flex-shrink: 0;
+  animation: bounce 1s ease infinite alternate;
+}
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-4px); }
+}
+.nav-bubble {
+  background: #eaf4fb;
+  border-radius: 0 12px 12px 12px;
+  padding: 10px 14px;
+  font-size: 0.88em;
+  line-height: 1.6;
+  color: #1a5276;
+  position: relative;
+  flex: 1;
+}
+.nav-bubble::before {
+  content: '';
+  position: absolute; left: -8px; top: 10px;
+  border: 8px solid transparent;
+  border-right-color: #eaf4fb;
+  border-left: 0;
+}
+
+.block {
+  background: white;
+  border-left: 5px solid #2e86c1;
+  border-radius: 0 0 8px 8px;
+  padding: 24px 28px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  display: none;
+  animation: fadeSlideIn 0.45s ease;
+}
+.block.active { display: block; }
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.block-title {
+  font-size: 1.05em; font-weight: bold;
+  color: #1a5276; margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #d6eaf8;
+  display: flex; align-items: center; gap: 8px;
+}
+.block-title .badge {
+  font-size: 0.72em; background: #2e86c1; color: white;
+  padding: 2px 10px; border-radius: 10px;
+}
+
+.q-block { margin-bottom: 24px; }
+.q-label {
+  font-size: 0.93em; font-weight: bold;
+  margin-bottom: 6px; display: block; color: #2c3e50;
+}
+.q-label .req { color: #e74c3c; font-size: 0.82em; margin-left: 4px; }
+.q-hint { font-size: 0.79em; color: #888; margin-bottom: 8px; }
+
+.feedback-box {
+  margin-top: 8px; padding: 8px 12px;
+  border-radius: 6px; font-size: 0.82em;
+  line-height: 1.5; min-height: 0;
+  transition: all 0.3s; display: none;
+}
+.feedback-box.show { display: block; }
+.feedback-good    { background: #eafaf1; color: #1e8449; border-left: 3px solid #27ae60; }
+.feedback-neutral { background: #fef9e7; color: #9a7d0a; border-left: 3px solid #f1c40f; }
+.feedback-tip     { background: #eaf4fb; color: #1a5276; border-left: 3px solid #2e86c1; }
+
+select, input[type="text"], textarea {
+  width: 100%; padding: 10px 13px;
+  border: 1.5px solid #bdc3c7; border-radius: 7px;
+  font-size: 0.92em; font-family: inherit;
+  background: #fdfefe; transition: border 0.2s, box-shadow 0.2s;
+}
+select:focus, input:focus, textarea:focus {
+  outline: none; border-color: #2e86c1;
+  background: #eaf4fb; box-shadow: 0 0 0 3px rgba(46,134,193,0.12);
+}
+textarea { resize: vertical; min-height: 80px; }
+
+.radio-group, .check-group {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.radio-group label, .check-group label {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 0.90em; cursor: pointer;
+  padding: 9px 14px;
+  border: 1.5px solid #d5d8dc; border-radius: 8px;
+  transition: all 0.2s; background: #fdfefe;
+}
+.radio-group label:hover, .check-group label:hover { background: #eaf4fb; border-color: #aed6f1; }
+.radio-group label.selected, .check-group label.selected {
+  background: #eaf4fb; border-color: #2e86c1;
+  box-shadow: 0 0 0 2px rgba(46,134,193,0.15);
+}
+.radio-group input, .check-group input { margin-top: 2px; accent-color: #2e86c1; flex-shrink: 0; }
+
+.other-input-wrap {
+  display: none;
+  margin-top: 8px;
+  padding: 10px 14px;
+  background: #f7fbff;
+  border-radius: 6px;
+  border: 1.5px dashed #aed6f1;
+  animation: fadeSlideIn 0.3s ease;
+}
+.other-input-wrap.show { display: block; }
+.other-input-wrap textarea {
+  min-height: 60px;
+  background: white;
+}
+
+.nav-btn-row {
+  display: flex; gap: 12px;
+  justify-content: space-between;
+  margin-top: 28px; flex-wrap: wrap;
+}
+.btn-prev    { background: #d5d8dc; color: #555; }
+.btn-next    { background: #2e86c1; color: white; flex: 1; }
+.btn-preview { background: #148f77; color: white; flex: 1; }
+.btn-reset   { background: #aab7b8; color: white; }
+button {
+  padding: 12px 22px; border: none; border-radius: 8px;
+  font-size: 0.95em; font-weight: bold; cursor: pointer;
+  font-family: inherit; transition: opacity 0.2s, transform 0.1s;
+}
+button:hover  { opacity: 0.88; }
+button:active { transform: scale(0.97); }
+
+.check-anim {
+  display: inline-block;
+  animation: popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+@keyframes popIn {
+  0%   { transform: scale(0); opacity: 0; }
+  80%  { transform: scale(1.3); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ============================================================
+   モーダル共通
+============================================================ */
+.modal-overlay {
+  display: none; position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.55); z-index: 1000;
+  align-items: center; justify-content: center;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+  background: white; border-radius: 14px;
+  padding: 28px; max-width: 640px; width: 94%;
+  max-height: 88vh; overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.22);
+  animation: fadeSlideIn 0.35s ease;
+}
+.modal h2 { color: #1a5276; margin-bottom: 12px; font-size: 1.1em; }
+.modal pre {
+  background: #f4f6f7; padding: 14px; border-radius: 8px;
+  font-size: 0.81em; white-space: pre-wrap; line-height: 1.75;
+  font-family: 'Courier New', monospace; border: 1px solid #d5d8dc;
+}
+.modal-btn-row { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+.btn-mail  { background: #2e86c1; color: white; }
+.btn-dl    { background: #148f77; color: white; }
+.btn-close { background: #aab7b8; color: white; }
+
+/* ============================================================
+   ▼▼▼ 感謝メッセージモーダル（新規追加）
+============================================================ */
+.thank-modal-overlay {
+  display: none; position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.60); z-index: 2000;
+  align-items: center; justify-content: center;
+}
+.thank-modal-overlay.active { display: flex; }
+.thank-modal {
+  background: white; border-radius: 20px;
+  padding: 44px 36px; max-width: 440px; width: 92%;
+  text-align: center;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.25);
+  animation: thankPop 0.5s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+@keyframes thankPop {
+  0%   { opacity: 0; transform: scale(0.7); }
+  80%  { transform: scale(1.04); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.thank-icon {
+  font-size: 4em;
+  margin-bottom: 16px;
+  animation: iconBounce 0.6s 0.3s cubic-bezier(0.175,0.885,0.32,1.275) both;
+}
+@keyframes iconBounce {
+  0%   { transform: scale(0) rotate(-20deg); opacity: 0; }
+  80%  { transform: scale(1.2) rotate(5deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+.thank-title {
+  font-size: 1.45em; font-weight: bold;
+  color: #1a5276; margin-bottom: 12px;
+}
+.thank-body {
+  font-size: 0.92em; color: #555;
+  line-height: 1.8; margin-bottom: 28px;
+}
+.thank-body strong { color: #2e86c1; }
+.thank-btn-row {
+  display: flex; flex-direction: column; gap: 10px;
+}
+.btn-new-idea {
+  background: linear-gradient(135deg, #1a5276, #2e86c1);
+  color: white; padding: 13px 20px;
+  border: none; border-radius: 10px;
+  font-size: 0.95em; font-weight: bold;
+  cursor: pointer; font-family: inherit;
+  transition: opacity 0.2s, transform 0.1s;
+}
+.btn-new-idea:hover  { opacity: 0.88; }
+.btn-new-idea:active { transform: scale(0.97); }
+.btn-just-close {
+  background: #ecf0f1; color: #777;
+  padding: 10px 20px;
+  border: none; border-radius: 10px;
+  font-size: 0.88em; cursor: pointer; font-family: inherit;
+  transition: opacity 0.2s;
+}
+.btn-just-close:hover { opacity: 0.75; }
+/* ▲▲▲ 感謝モーダルここまで ▲▲▲ */
+
+@media(max-width:600px){
+  .nav-btn-row { flex-direction: column; }
+  button { width: 100%; }
+  .stepper { gap: 2px; padding: 10px 8px; }
+  .step-label { font-size: 0.58em; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>💡 医療をよくするアイデア＆お困りごと提案フォーム</h1>
+    <p>現場の気づきやアイデアをカタチにします。3〜5分で入力できます。</p>
+  </div>
+
+  <div class="stepper" id="stepper">
+    <div class="step-dot">
+      <div class="step-circle active" id="sc0">1</div>
+      <div class="step-label active" id="sl0">基本情報</div>
+    </div>
+    <div class="step-line" id="line0"></div>
+    <div class="step-dot">
+      <div class="step-circle" id="sc1">2</div>
+      <div class="step-label" id="sl1">現場の課題</div>
+    </div>
+    <div class="step-line" id="line1"></div>
+    <div class="step-dot">
+      <div class="step-circle" id="sc2">3</div>
+      <div class="step-label" id="sl2">現状の対応</div>
+    </div>
+    <div class="step-line" id="line2"></div>
+    <div class="step-dot">
+      <div class="step-circle" id="sc3">4</div>
+      <div class="step-label" id="sl3">アイデア</div>
+    </div>
+    <div class="step-line" id="line3"></div>
+    <div class="step-dot">
+      <div class="step-circle" id="sc4">5</div>
+      <div class="step-label" id="sl4">期待効果</div>
+    </div>
+  </div>
+
+  <div class="progress-bar-wrap">
+    <span id="progress-label">0 / 13 項目入力済み</span>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <div class="navigator">
+    <div class="nav-avatar">🤖</div>
+    <div class="nav-bubble" id="navBubble">
+      こんにちは！現場のアイデアやお困りごとを教えてください。<br>
+      まず、<strong>あなたの基本情報</strong>から始めましょう。気軽に入力してください😊
+    </div>
+  </div>
+
+  <form id="ideaForm" novalidate>
+
+    <!-- ステップ1：基本情報 -->
+    <div class="block active" id="step0">
+      <div class="block-title">📋 第1ステップ：基本情報</div>
+      <div class="q-block">
+        <label class="q-label">Q1. 所属部署 <span class="req">★必須</span></label>
+        <select id="q1" required onchange="onSelectChange('q1')">
+          <option value="">-- 選択してください --</option>
+          <option>GICU</option><option>手術室</option><option>外来</option>
+          <option>病棟</option><option>リハビリテーション科</option><option>薬剤部</option>
+          <option>放射線科</option><option>臨床検査部</option>
+          <option>医療情報・システム部門</option><option>臨床研究支援センター</option>
+          <option>事務部門</option><option>その他</option>
+        </select>
+        <div class="feedback-box feedback-good" id="fb-q1"></div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">Q2. 氏名 <span class="req">★必須</span></label>
+        <input type="text" id="q2" placeholder="例：山田 太郎（匿名希望の場合は「匿名」と入力可）"
+               oninput="onTextInput('q2')" required>
+        <div class="feedback-box" id="fb-q2"></div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">Q3. 職種 <span class="req">★必須</span></label>
+        <div class="radio-group" id="q3">
+          <label><input type="radio" name="q3" value="医師" onchange="onRadioChange('q3')"> 医師</label>
+          <label><input type="radio" name="q3" value="看護師" onchange="onRadioChange('q3')"> 看護師</label>
+          <label><input type="radio" name="q3" value="薬剤師" onchange="onRadioChange('q3')"> 薬剤師</label>
+          <label><input type="radio" name="q3" value="臨床工学技士" onchange="onRadioChange('q3')"> 臨床工学技士</label>
+          <label><input type="radio" name="q3" value="理学療法士・作業療法士" onchange="onRadioChange('q3')"> 理学療法士・作業療法士</label>
+          <label><input type="radio" name="q3" value="事務職" onchange="onRadioChange('q3')"> 事務職</label>
+          <label><input type="radio" name="q3" value="その他" onchange="onRadioChange('q3')"> その他</label>
+        </div>
+        <div class="feedback-box" id="fb-q3"></div>
+      </div>
+      <div class="nav-btn-row">
+        <button type="button" class="btn-next" onclick="goNext(0)">次へ：現場の課題 →</button>
+      </div>
+    </div>
+
+    <!-- ステップ2：現場の課題 -->
+    <div class="block" id="step1">
+      <div class="block-title">🔍 第2ステップ：現場の課題 <span class="badge">P：対象・背景</span></div>
+      <div class="q-block">
+        <label class="q-label">Q4. 誰が一番困っていますか？ <span class="req">★必須</span></label>
+        <div class="radio-group" id="q4">
+          <label><input type="radio" name="q4" value="患者さん" onchange="onRadioChange('q4')"> 患者さん</label>
+          <label><input type="radio" name="q4" value="自分自身・自部署のスタッフ" onchange="onRadioChange('q4')"> 自分自身・自部署のスタッフ</label>
+          <label><input type="radio" name="q4" value="他部署のスタッフ" onchange="onRadioChange('q4')"> 他部署のスタッフ</label>
+          <label><input type="radio" name="q4" value="病院全体" onchange="onRadioChange('q4')"> 病院全体</label>
+        </div>
+        <div class="feedback-box" id="fb-q4"></div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">Q5. 困りごとの発生頻度は？ <span class="req">★必須</span></label>
+        <div class="radio-group" id="q5">
+          <label><input type="radio" name="q5" value="毎日複数回" onchange="onRadioChange('q5')"> 毎日複数回</label>
+          <label><input type="radio" name="q5" value="毎日1回程度" onchange="onRadioChange('q5')"> 毎日1回程度</label>
+          <label><input type="radio" name="q5" value="週に数回" onchange="onRadioChange('q5')"> 週に数回</label>
+          <label><input type="radio" name="q5" value="月に数回" onchange="onRadioChange('q5')"> 月に数回</label>
+          <label><input type="radio" name="q5" value="稀だが発生すると重大" onchange="onRadioChange('q5')"> 稀だが発生すると重大（ハイリスク）</label>
+        </div>
+        <div class="feedback-box" id="fb-q5"></div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">Q6. どのような悪影響（ペイン）が生じていますか？ <span class="req">★必須</span>（複数選択可）</label>
+        <div class="check-group" id="q6">
+          <label><input type="checkbox" name="q6" value="医療安全の低下（インシデントリスクなど）" onchange="onCheckChange('q6')"> 医療安全の低下（インシデントリスクなど）</label>
+          <label><input type="checkbox" name="q6" value="業務時間の圧迫（残業・無駄な転記作業など）" onchange="onCheckChange('q6')"> 業務時間の圧迫（残業・無駄な転記作業など）</label>
+          <label><input type="checkbox" name="q6" value="患者さんの苦痛・QOL低下（痛み、離床の遅れなど）" onchange="onCheckChange('q6')"> 患者さんの苦痛・QOL低下（痛み、離床の遅れなど）</label>
+          <label><input type="checkbox" name="q6" value="スタッフの身体的・精神的負担" onchange="onCheckChange('q6')"> スタッフの身体的・精神的負担</label>
+          <label><input type="checkbox" name="q6" value="物品やコストの無駄" onchange="onCheckChange('q6')"> 物品やコストの無駄</label>
+          <label><input type="checkbox" name="q6" value="その他" id="q6-other-check"
+                        onchange="onCheckChange('q6'); toggleOtherInput('q6-other-check','q6-other-wrap')"> その他</label>
+        </div>
+        <div class="other-input-wrap" id="q6-other-wrap">
+          <div class="q-hint" style="margin-bottom:6px;">📝 具体的にどのような悪影響か教えてください</div>
+          <textarea id="q6-other-text" placeholder="例：記録の転記ミスが起きやすい、情報共有に時間がかかる など" oninput="updateProgress()"></textarea>
+        </div>
+        <div class="feedback-box" id="fb-q6"></div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">Q7. 困っている具体的な場面を教えてください</label>
+        <div class="q-hint">💬 いつ・どこで・誰が・何が起きるかを書くと伝わりやすいです</div>
+        <textarea id="q7" placeholder="例：術後、患者さんが複数ルートを持ったまま歩行する際、チューブが引っかかりやすい"
+                  oninput="onTextareaInput('q7')"></textarea>
+        <div class="feedback-box" id="fb-q7"></div>
+      </div>
+      <div class="nav-btn-row">
+        <button type="button" class="btn-prev" onclick="goPrev(1)">← 戻る</button>
+        <button type="button" class="btn-next" onclick="goNext(1)">次へ：現状の対応 →</button>
+      </div>
+    </div>
+
+    <!-- ステップ3：現在の対応 -->
+    <div class="block" id="step2">
+      <div class="block-title">🔄 第3ステップ：現在の対応とその限界 <span class="badge">C：比較対照</span></div>
+      <div class="q-block">
+        <label class="q-label">Q8. 現在、現場ではどのように工夫して乗り切っていますか？</label>
+        <textarea id="q8" placeholder="例：チューブをまとめてテープで留めている、スタッフが常に付き添う など"
+                  oninput="onTextareaInput('q8')"></textarea>
+        <div class="feedback-box" id="fb-q8"></div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">Q9. 今のやり方の「限界」は何ですか？（複数選択可）</label>
+        <div class="check-group" id="q9">
+          <label><input type="checkbox" name="q9" value="手作業が多くて時間がかかる" onchange="onCheckChange('q9')"> 手作業が多くて時間がかかる</label>
+          <label><input type="checkbox" name="q9" value="人によってやり方や精度にばらつきが出る" onchange="onCheckChange('q9')"> 人によってやり方や精度にばらつきが出る</label>
+          <label><input type="checkbox" name="q9" value="根本的な解決（安全確保など）になっていない" onchange="onCheckChange('q9')"> 根本的な解決（安全確保など）になっていない</label>
+          <label><input type="checkbox" name="q9" value="消耗品費などのコストがかかる" onchange="onCheckChange('q9')"> 消耗品費などのコストがかかる</label>
+          <label><input type="checkbox" name="q9" value="スタッフへの教育コストが高い" onchange="onCheckChange('q9')"> スタッフへの教育コストが高い</label>
+        </div>
+        <div class="feedback-box" id="fb-q9"></div>
+      </div>
+      <div class="nav-btn-row">
+        <button type="button" class="btn-prev" onclick="goPrev(2)">← 戻る</button>
+        <button type="button" class="btn-next" onclick="goNext(2)">次へ：アイデア →</button>
+      </div>
+    </div>
+
+    <!-- ステップ4：アイデア -->
+    <div class="block" id="step3">
+      <div class="block-title">💡 第4ステップ：あなたのアイデア <span class="badge">I：介入</span></div>
+      <div class="q-block">
+        <label class="q-label">Q10. どのようなアイテム・システムがあれば解決すると思いますか？ <span class="req">★必須</span></label>
+        <div class="q-hint">💭 完成形でなくて大丈夫！「こんなものがあれば…」という段階のアイデアでも歓迎します</div>
+        <textarea id="q10" rows="5" placeholder="自由に書いてみてください。思いつくままでOKです。"
+                  oninput="onIdeaInput()" required></textarea>
+        <div class="feedback-box" id="fb-q10"></div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">Q11. アイデアのカテゴリー（一番近いもの） <span class="req">★必須</span></label>
+        <div class="q-hint">⚡ 一番近いものを選んでください</div>
+        <div class="radio-group" id="q11">
+          <label><input type="radio" name="q11" value="医療機器・器具の新規開発や改良" onchange="onRadioChange('q11')"> 🔧 医療機器・器具の新規開発や改良</label>
+          <label><input type="radio" name="q11" value="アプリ・RPAによる業務自動化・電子化" onchange="onRadioChange('q11')"> 💻 アプリ・RPA（UiPathなど）による業務自動化・電子化</label>
+          <label><input type="radio" name="q11" value="既存製品の新しい使い方（転用・適応外使用など）" onchange="onRadioChange('q11')"> ♻️ 既存製品の新しい使い方（転用・適応外使用など）</label>
+          <label><input type="radio" name="q11" value="運用ルールやマニュアルの変更" onchange="onRadioChange('q11')"> 📄 運用ルールやマニュアルの変更</label>
+        </div>
+        <div class="feedback-box" id="fb-q11"></div>
+      </div>
+      <div class="nav-btn-row">
+        <button type="button" class="btn-prev" onclick="goPrev(3)">← 戻る</button>
+        <button type="button" class="btn-next" onclick="goNext(3)">次へ：期待効果 →</button>
+      </div>
+    </div>
+
+    <!-- ステップ5：期待される効果 -->
+    <div class="block" id="step4">
+      <div class="block-title">📊 第5ステップ：期待される効果 <span class="badge">O：アウトカム</span></div>
+      <div class="q-block">
+        <label class="q-label">Q12. このアイデアが実現すると、何が改善しますか？ <span class="req">★必須</span>（複数選択可）</label>
+        <div class="check-group" id="q12">
+          <label><input type="checkbox" name="q12" value="インシデント件数の減少（医療安全の向上）" onchange="onCheckChange('q12')"> 🛡️ インシデント件数の減少（医療安全の向上）</label>
+          <label><input type="checkbox" name="q12" value="業務時間・記録時間の短縮" onchange="onCheckChange('q12')"> ⏱️ 業務時間・記録時間の短縮</label>
+          <label><input type="checkbox" name="q12" value="患者さんの回復促進（早期離床・QOL向上など）" onchange="onCheckChange('q12')"> 🏃 患者さんの回復促進（早期離床・QOL向上など）</label>
+          <label><input type="checkbox" name="q12" value="コスト削減（物品費・人件費など）" onchange="onCheckChange('q12')"> 💴 コスト削減（物品費・人件費など）</label>
+          <label><input type="checkbox" name="q12" value="スタッフの負担軽減・満足度向上" onchange="onCheckChange('q12')"> 😊 スタッフの負担軽減・満足度向上</label>
+          <label><input type="checkbox" name="q12" value="その他" id="q12-other-check"
+                        onchange="onCheckChange('q12'); toggleOtherInput('q12-other-check','q12-other-wrap')"> その他</label>
+        </div>
+        <div class="other-input-wrap" id="q12-other-wrap">
+          <div class="q-hint" style="margin-bottom:6px;">📝 どのような改善が期待できるか教えてください</div>
+          <textarea id="q12-other-text" placeholder="例：患者満足度の向上、スタッフ間のコミュニケーション改善 など" oninput="updateProgress()"></textarea>
+        </div>
+        <div class="feedback-box" id="fb-q12"></div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">Q13. どのくらい良くなりそうですか？（わかる範囲で）</label>
+        <div class="q-hint">💬 記入例：1日あたり1時間の業務削減 / インシデントが半減 / 術後離床が1日早まる など</div>
+        <textarea id="q13" placeholder="数値や割合で書けると、より開発がイメージしやすくなります。"
+                  oninput="onTextareaInput('q13')"></textarea>
+        <div class="feedback-box" id="fb-q13"></div>
+      </div>
+      <div class="q-block">
+        <label class="q-label">Q14. 参考になる写真・資料があればメールに添付してください（任意）</label>
+        <div class="q-hint">📎 現在の問題の様子、参考にしたい製品画像、手書きスケッチなど（JPG・PNG・PDF対応）をメール送信時に直接添付してください。</div>
+      </div>
+      <div class="nav-btn-row">
+        <button type="button" class="btn-prev" onclick="goPrev(4)">← 戻る</button>
+        <button type="button" class="btn-preview" onclick="showPreview()">👁️ 内容を確認して送信</button>
+      </div>
+      <div style="text-align:center; margin-top:12px;">
+        <button type="button" class="btn-reset" onclick="resetForm()">🔄 最初からやり直す</button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+<!-- プレビュー＆送信モーダル -->
+<div class="modal-overlay" id="previewModal">
+  <div class="modal">
+    <h2>📋 入力内容の確認</h2>
+    <p style="font-size:0.85em;color:#666;margin-bottom:12px;">以下の内容で提出します。送信方法を選んでください。</p>
+    <pre id="previewText"></pre>
+    <div id="picoBox" style="margin-top:14px; padding:14px; background:#eaf4fb; border-radius:8px;
+         font-size:0.83em; line-height:1.9; border-left:4px solid #2e86c1; display:none;">
+      <strong>🔬 自動生成：研究計画骨格（PICO）</strong><br>
+      <span id="picoContent"></span>
+    </div>
+    <div class="modal-btn-row">
+      <button class="btn-mail"  onclick="sendMail()">✉️ メールで送信</button>
+      <button class="btn-dl"    onclick="downloadTxt()">💾 TXTで保存</button>
+      <!-- ▼ 閉じるボタン：感謝モーダルを表示するように変更 -->
+      <button class="btn-close" onclick="closePreviewAndThank()">✖ 閉じる</button>
+    </div>
+  </div>
+</div>
+
+<!-- ▼▼▼ 感謝メッセージモーダル（新規追加） ▼▼▼ -->
+<div class="thank-modal-overlay" id="thankModal">
+  <div class="thank-modal">
+    <div class="thank-icon">🎉</div>
+    <div class="thank-title">ご協力ありがとうございました！</div>
+    <div class="thank-body">
+      <strong id="thank-name-label"></strong><br>
+      あなたの現場からの声が、<br>
+      <strong>医療をよりよくするための第一歩</strong>になります。<br><br>
+      提案内容は担当部署にて確認・検討いたします。<br>
+      引き続きアイデアをお寄せください😊
+    </div>
+    <div class="thank-btn-row">
+      <button class="btn-new-idea" onclick="startNewIdea()">💡 新しいアイデアを提案する</button>
+      <button class="btn-just-close" onclick="closeThankModal()">このまま閉じる</button>
+    </div>
+  </div>
+</div>
+<!-- ▲▲▲ 感謝モーダルここまで ▲▲▲ -->
+
+<script>
+// ============================================================
+//  設定
+// ============================================================
+const MAIL_TO = 'ns.morizo@gmail.com';
+
+// ============================================================
+//  ステップ管理
+// ============================================================
+let currentStep = 0;
+const TOTAL_STEPS = 5;
+
+const NAV_MESSAGES = [
+  'こんにちは！現場のアイデアやお困りごとを教えてください。<br>まず、<strong>あなたの基本情報</strong>から始めましょう。気軽に入力してください😊',
+  '基本情報、ありがとうございます！✨<br>次は<strong>現場での課題</strong>を教えてください。「誰が」「どんな頻度で」困っているかを教えてもらえると助かります。',
+  '課題がよく伝わってきます！👍<br>次は<strong>今どのように対応しているか</strong>を教えてください。現状の工夫と、その限界を率直に教えてください。',
+  'ここからが一番大切なパートです！💡<br><strong>あなたのアイデア</strong>を聞かせてください。完成形でなくて大丈夫。「こんなものがあれば…」というレベルでも大歓迎です！',
+  'アイデア、素晴らしいです！🎉<br>最後に<strong>期待される効果</strong>を教えてください。数値で表現できると、実現に向けた計画が立てやすくなります。'
+];
+
+function showStep(step) {
+  document.querySelectorAll('.block').forEach((b, i) => {
+    b.classList.toggle('active', i === step);
+  });
+  for (let i = 0; i < TOTAL_STEPS; i++) {
+    const sc = document.getElementById(`sc${i}`);
+    const sl = document.getElementById(`sl${i}`);
+    sc.className = 'step-circle';
+    sl.className = 'step-label';
+    if (i < step)        { sc.classList.add('done'); sc.innerHTML = '<span class="check-anim">✓</span>'; }
+    else if (i === step) { sc.classList.add('active'); sc.textContent = i + 1; sl.classList.add('active'); }
+    else                 { sc.textContent = i + 1; }
+    if (i < TOTAL_STEPS - 1) {
+      document.getElementById(`line${i}`).className = 'step-line' + (i < step ? ' done' : '');
+    }
+  }
+  document.getElementById('navBubble').innerHTML = NAV_MESSAGES[step];
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  currentStep = step;
+}
+
+// ============================================================
+//  ステップ検証
+// ============================================================
+const STEP_REQUIRED = [
+  () => {
+    const errs = [];
+    if (!getVal('q1'))   errs.push('Q1 所属部署');
+    if (!getVal('q2'))   errs.push('Q2 氏名');
+    if (!getRadio('q3')) errs.push('Q3 職種');
+    return errs;
+  },
+  () => {
+    const errs = [];
+    if (!getRadio('q4'))              errs.push('Q4 困っている対象');
+    if (!getRadio('q5'))              errs.push('Q5 発生頻度');
+    if (getChecks('q6').length === 0) errs.push('Q6 悪影響（ペイン）');
+    return errs;
+  },
+  () => [],
+  () => {
+    const errs = [];
+    if (!getVal('q10'))   errs.push('Q10 アイデア');
+    if (!getRadio('q11')) errs.push('Q11 カテゴリー');
+    return errs;
+  },
+  () => {
+    const errs = [];
+    if (getChecks('q12').length === 0) errs.push('Q12 期待される効果');
+    return errs;
+  }
+];
+
+function goNext(step) {
+  const errs = STEP_REQUIRED[step]();
+  if (errs.length > 0) {
+    alert('⚠️ 以下の必須項目が未入力です：\n\n' + errs.join('\n'));
+    return;
+  }
+  showStep(step + 1);
+}
+function goPrev(step) { showStep(step - 1); }
+
+// ============================================================
+//  ユーティリティ
+// ============================================================
+function getVal(id)    { return (document.getElementById(id)||{value:''}).value.trim(); }
+function getRadio(nm)  { const el = document.querySelector(`input[name="${nm}"]:checked`); return el ? el.value : ''; }
+function getChecks(nm) { return [...document.querySelectorAll(`input[name="${nm}"]:checked`)].map(e=>e.value); }
+
+function getQ6Values() {
+  return getChecks('q6').map(v => {
+    if (v === 'その他') {
+      const other = getVal('q6-other-text');
+      return other ? `その他（${other}）` : 'その他';
+    }
+    return v;
+  });
+}
+function getQ12Values() {
+  return getChecks('q12').map(v => {
+    if (v === 'その他') {
+      const other = getVal('q12-other-text');
+      return other ? `その他（${other}）` : 'その他';
+    }
+    return v;
+  });
+}
+
+function showFeedback(id, msg, type) {
+  const el = document.getElementById(`fb-${id}`);
+  if (!el) return;
+  el.textContent = msg;
+  el.className = `feedback-box feedback-${type} show`;
+}
+function hideFeedback(id) {
+  const el = document.getElementById(`fb-${id}`);
+  if (el) { el.className = 'feedback-box'; el.textContent = ''; }
+}
+function highlightSelected(groupId) {
+  document.querySelectorAll(`#${groupId} label`).forEach(lbl => {
+    lbl.classList.toggle('selected', lbl.querySelector('input').checked);
+  });
+}
+function highlightChecked(groupId) {
+  document.querySelectorAll(`#${groupId} label`).forEach(lbl => {
+    lbl.classList.toggle('selected', lbl.querySelector('input').checked);
+  });
+}
+function toggleOtherInput(checkId, wrapId) {
+  const checked = document.getElementById(checkId).checked;
+  const wrap = document.getElementById(wrapId);
+  wrap.classList.toggle('show', checked);
+  if (!checked) {
+    const ta = wrap.querySelector('textarea');
+    if (ta) ta.value = '';
+  }
+}
+
+// ============================================================
+//  プログレスバー
+// ============================================================
+function updateProgress() {
+  const items = [
+    getVal('q1'), getVal('q2'), getRadio('q3'), getRadio('q4'),
+    getRadio('q5'), getChecks('q6').length > 0 ? '1' : '',
+    getVal('q7'), getVal('q8'), getChecks('q9').length > 0 ? '1' : '',
+    getVal('q10'), getRadio('q11'), getChecks('q12').length > 0 ? '1' : '', getVal('q13')
+  ];
+  const filled = items.filter(v => v !== '').length;
+  document.getElementById('progress-label').textContent = `${filled} / 13 項目入力済み`;
+  document.getElementById('progressFill').style.width = `${Math.round(filled / 13 * 100)}%`;
+}
+document.addEventListener('change', updateProgress);
+document.addEventListener('input',  updateProgress);
+
+// ============================================================
+//  フィードバック関数群
+// ============================================================
+function onSelectChange(id) {
+  const v = getVal(id);
+  if (v) showFeedback(id, `✅ 「${v}」で登録します！`, 'good');
+  else   hideFeedback(id);
+}
+function onTextInput(id) {
+  const v = getVal(id);
+  if (!v) { hideFeedback(id); return; }
+  if (v === '匿名') showFeedback(id, '🙈 匿名で受け付けます。安心してどうぞ。', 'tip');
+  else if (v.length >= 2) showFeedback(id, `✅ ${v} さん、よろしくお願いします！`, 'good');
+}
+function onRadioChange(name) {
+  highlightSelected(name);
+  const v = getRadio(name);
+  const feedbackMap = {
+    q3: { '医師':'🩺 医師の視点でのアイデア、大変参考になります！', '看護師':'💉 看護師さんの現場感覚はアイデアの宝庫です！', '薬剤師':'💊 薬剤師さんの専門知識が解決のカギになることも。', '臨床工学技士':'⚙️ 機器・システム系のアイデアも大歓迎です！', '理学療法士・作業療法士':'🏃 リハビリ現場の知見、ぜひ聞かせてください！', '事務職':'📋 事務・管理系の改善アイデアも重要です！', 'その他':'👤 どんな立場からのアイデアも大切にします！' },
+    q4: { '患者さん':'🏥 患者中心のアイデアは最も価値があります！', '自分自身・自部署のスタッフ':'👥 現場スタッフの声が改善の第一歩です！', '他部署のスタッフ':'🤝 部署間の連携改善につながりそうですね。', '病院全体':'🏢 病院全体のシステム改善は大きな影響力があります！' },
+    q5: { '毎日複数回':'🔴 毎日複数回とは、かなり緊急度が高いですね。早急な解決が必要そうです。', '毎日1回程度':'🟠 毎日発生しているなら、確実に解決策が必要です。', '週に数回':'🟡 週に数回の発生でも、積み重なると大きな負担になりますね。', '月に数回':'🟢 頻度は低くても、対策しておく価値は十分あります。', '稀だが発生すると重大':'⚠️ ハイリスクな事象は頻度が低くても最優先で対策が必要です！' },
+    q11: { '医療機器・器具の新規開発や改良':'🔧 機器・器具系のアイデアですね！専門担当者と連携して検討します。', 'アプリ・RPAによる業務自動化・電子化':'💻 デジタル化・自動化のアイデアですね！情報システム担当と連携します。', '既存製品の新しい使い方（転用・適応外使用など）':'♻️ 既存品の転用とは面白い発想ですね！薬事確認も含めて検討します。', '運用ルールやマニュアルの変更':'📄 運用改善のアイデアですね。比較的すぐに実行できる可能性があります！' }
+  };
+  const msg = (feedbackMap[name] || {})[v];
+  if (msg) showFeedback(name, msg, 'good');
+}
+function onCheckChange(name) {
+  highlightChecked(name);
+  const checks = getChecks(name);
+  if (name === 'q6') {
+    if (checks.length === 0) { hideFeedback('q6'); return; }
+    const hasOther = checks.includes('その他');
+    if (checks.length === 1 && hasOther)    showFeedback('q6', '📝 下の欄に具体的な内容を記入してください。', 'tip');
+    else if (checks.length === 1)           showFeedback('q6', `✅ 「${checks[0]}」を選択しました。他にも該当するものがあれば追加してください。`, 'good');
+    else if (checks.length >= 3)            showFeedback('q6', `⚡ ${checks.length}つの問題が重なっているんですね。複合的な課題です。アイデアで一気に解決しましょう！`, 'tip');
+    else                                    showFeedback('q6', `✅ ${checks.length}つ選択済み。他にもあれば追加してください。`, 'good');
+  }
+  if (name === 'q9') {
+    if (checks.length === 0) { hideFeedback('q9'); return; }
+    showFeedback('q9', `✅ ${checks.length}つの限界を選択。これだけの問題があるなら、改善の余地は大きいですね！`, 'good');
+  }
+  if (name === 'q12') {
+    if (checks.length === 0) { hideFeedback('q12'); return; }
+    const hasOther = checks.includes('その他');
+    if (checks.length === 1 && hasOther)    showFeedback('q12', '📝 下の欄に期待される効果を記入してください。', 'tip');
+    else if (checks.length === 1)           showFeedback('q12', `✅ 「${checks[0]}」を選択。この効果を軸に提案を進めます！`, 'good');
+    else if (checks.length >= 3)            showFeedback('q12', `🚀 ${checks.length}つの改善効果が期待できる、インパクトの大きいアイデアですね！`, 'good');
+    else                                    showFeedback('q12', `✅ ${checks.length}つの改善効果を期待しています！`, 'good');
+  }
+}
+function onTextareaInput(id) {
+  const v = getVal(id); if (!v) { hideFeedback(id); return; }
+  const len = v.length;
+  if (id === 'q7') {
+    if (len < 20)      showFeedback('q7', '✏️ もう少し詳しく教えてもらえますか？「いつ・どこで・誰が・何が起きる」を意識すると伝わりやすいです。', 'neutral');
+    else if (len < 50) showFeedback('q7', '📝 いい感じです！もう少し具体的な状況を加えると完璧です。', 'tip');
+    else               showFeedback('q7', '✅ 具体的で分かりやすい場面描写です！', 'good');
+  }
+  if (id === 'q8') {
+    if (len < 15) showFeedback('q8', '✏️ 現在の対応を少し詳しく教えてください。', 'neutral');
+    else          showFeedback('q8', '✅ 現状の工夫が伝わります。ありがとうございます！', 'good');
+  }
+  if (id === 'q13') {
+    const hasNum = /[0-9０-９]/.test(v);
+    if (hasNum) showFeedback('q13', '🎯 数値が含まれています！具体的な目標値があると提案の説得力が増します。', 'good');
+    else        showFeedback('q13', '💡 「〇〇分削減」「〇〇%改善」など数値で表現できると、より実現のイメージが湧きます。', 'tip');
+  }
+}
+function onIdeaInput() {
+  const v = getVal('q10'); if (!v) { hideFeedback('q10'); return; }
+  const len = v.length;
+  if (len < 20)       showFeedback('q10', '💭 アイデアの種が生まれていますね！もう少し膨らませてみてください。', 'neutral');
+  else if (len < 60)  showFeedback('q10', '💡 いいアイデアが出てきました！「誰が・何を・どうやって使うか」を加えてみましょう。', 'tip');
+  else if (len < 120) showFeedback('q10', '✨ 具体性が増してきました！素晴らしいアイデアです。', 'good');
+  else                showFeedback('q10', '🚀 とても詳細なアイデアです！実現に向けて動き出せそうですね。', 'good');
+}
+
+// ============================================================
+//  バリデーション
+// ============================================================
+function validate() {
+  const required = [
+    { val: getVal('q1'),                            label: 'Q1 所属部署' },
+    { val: getVal('q2'),                            label: 'Q2 氏名' },
+    { val: getRadio('q3'),                          label: 'Q3 職種' },
+    { val: getRadio('q4'),                          label: 'Q4 困っている対象' },
+    { val: getRadio('q5'),                          label: 'Q5 発生頻度' },
+    { val: getChecks('q6').length > 0 ? '1' : '',  label: 'Q6 悪影響（ペイン）' },
+    { val: getVal('q10'),                           label: 'Q10 アイデア' },
+    { val: getRadio('q11'),                         label: 'Q11 カテゴリー' },
+    { val: getChecks('q12').length > 0 ? '1' : '', label: 'Q12 期待される効果' },
+  ];
+  const missing = required.filter(r => !r.val).map(r => r.label);
+  if (missing.length > 0) {
+    alert('⚠️ 以下の必須項目が未入力です：\n\n' + missing.join('\n'));
+    return false;
+  }
+  return true;
+}
+
+// ============================================================
+//  フォームテキスト生成
+// ============================================================
+function buildText() {
+  const now = new Date().toLocaleString('ja-JP');
+  const q6  = getQ6Values().join(' / ')  || '（未選択）';
+  const q9  = getChecks('q9').join(' / ')|| '（未選択）';
+  const q12 = getQ12Values().join(' / ') || '（未選択）';
+  return `
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💡 院内アイデア＆お困りごと提案フォーム
+送信日時：${now}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+【第1ブロック：基本情報】
+Q1. 所属部署    ： ${getVal('q1') || '（未入力）'}
+Q2. 氏名       ： ${getVal('q2') || '（未入力）'}
+Q3. 職種       ： ${getRadio('q3') || '（未選択）'}
+
+【第2ブロック：現場の課題 — P：対象・背景】
+Q4. 困っている対象  ： ${getRadio('q4') || '（未選択）'}
+Q5. 発生頻度       ： ${getRadio('q5') || '（未選択）'}
+Q6. 悪影響（ペイン） ： ${q6}
+Q7. 具体的な場面    ：
+${getVal('q7') || '（未記入）'}
+
+【第3ブロック：現在の対応 — C：比較対照】
+Q8. 現在の工夫  ：
+${getVal('q8') || '（未記入）'}
+Q9. 現状の限界  ： ${q9}
+
+【第4ブロック：アイデア — I：介入】
+Q10. アイデア   ：
+${getVal('q10') || '（未記入）'}
+Q11. カテゴリー ： ${getRadio('q11') || '（未選択）'}
+
+【第5ブロック：期待される効果 — O：アウトカム】
+Q12. 期待される効果  ： ${q12}
+Q13. 定量的な予測    ：
+${getVal('q13') || '（未記入）'}
+Q14. 添付ファイル    ： ※参考資料はこのメールに直接添付してください
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+`.trim();
+}
+
+// ============================================================
+//  PICO骨格の自動生成
+// ============================================================
+function buildPico() {
+  const p    = getRadio('q4')            || '___';
+  const freq = getRadio('q5')            || '___';
+  const pain = getQ6Values().join('・')  || '___';
+  const i    = getVal('q10')             || '___（アイデア）';
+  const c    = getVal('q8')              || '___（現在の対応）';
+  const o    = getQ12Values().join('・') || '___';
+  const q    = getVal('q13')             || '（定量値未記入）';
+  return `
+<b>P（対象・背景）：</b>${p}において、${pain}という問題が${freq}の頻度で発生している。<br>
+<b>C（比較対照）：</b>現在は「${c}」で対応しているが、根本的な解決には至っていない。<br>
+<b>I（介入）：</b>新たに「${i.substring(0,60)}…」を導入する。<br>
+<b>O（評価項目）：</b>${o}を主要評価項目とし、${q}の改善が得られるかを検証する。
+`.trim();
+}
+
+// ============================================================
+//  プレビュー表示
+// ============================================================
+function showPreview() {
+  if (!validate()) return;
+  document.getElementById('previewText').textContent = buildText();
+  document.getElementById('picoContent').innerHTML = buildPico();
+  document.getElementById('picoBox').style.display = 'block';
+  document.getElementById('previewModal').classList.add('active');
+}
+
+// ============================================================
+//  ▼▼▼ モーダル閉じる処理（変更箇所）▼▼▼
+// ============================================================
+
+// プレビューモーダルの「✖ 閉じる」→ 感謝モーダルへ遷移
+function closePreviewAndThank() {
+  document.getElementById('previewModal').classList.remove('active');
+  // 氏名をパーソナライズして表示
+  const name = getVal('q2');
+  const label = (name && name !== '匿名')
+    ? `${name} さん、`
+    : '';
+  document.getElementById('thank-name-label').textContent = label;
+  // 感謝モーダルを表示
+  document.getElementById('thankModal').classList.add('active');
+}
+
+// 感謝モーダル：「このまま閉じる」
+function closeThankModal() {
+  document.getElementById('thankModal').classList.remove('active');
+}
+
+// 感謝モーダル：「新しいアイデアを提案する」
+function startNewIdea() {
+  document.getElementById('thankModal').classList.remove('active');
+  resetFormSilent(); // 確認ダイアログなしでリセット
+}
+
+// ▲▲▲ モーダル閉じる処理ここまで ▲▲▲
+
+// ============================================================
+//  メール送信
+// ============================================================
+function sendMail() {
+  const dept = getVal('q1')   || '不明';
+  const name = getVal('q2')   || '匿名';
+  const cat  = getRadio('q11')|| '未選択';
+  const subject = encodeURIComponent(`【院内アイデア提案】${cat}｜${dept} ${name}`);
+  const body    = encodeURIComponent(
+    buildText() + '\n\n' +
+    '--- 研究計画骨格（PICO）---\n' +
+    buildPico().replace(/<[^>]+>/g, '') + '\n\n' +
+    '※参考写真・資料がある場合はこのメールに直接添付してください。'
+  );
+  window.location.href = `mailto:${MAIL_TO}?subject=${subject}&body=${body}`;
+}
+
+// ============================================================
+//  TXTダウンロード
+// ============================================================
+function downloadTxt() {
+  const text = buildText() + '\n\n--- 研究計画骨格（PICO）---\n' + buildPico().replace(/<[^>]+>/g, '');
+  const now  = new Date();
+  const ts   = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
+  const name = getVal('q2') || 'unknown';
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  const a    = document.createElement('a');
+  a.href     = URL.createObjectURL(blob);
+  a.download = `idea_${ts}_${name}.txt`;
+  a.click();
+}
+
+// ============================================================
+//  リセット
+// ============================================================
+function resetFormSilent() {
+  document.getElementById('ideaForm').reset();
+  document.querySelectorAll('.feedback-box').forEach(el => { el.className = 'feedback-box'; el.textContent = ''; });
+  document.querySelectorAll('.radio-group label, .check-group label').forEach(lbl => lbl.classList.remove('selected'));
+  ['q6-other-wrap', 'q12-other-wrap'].forEach(id => {
+    document.getElementById(id).classList.remove('show');
+  });
+  showStep(0);
+  updateProgress();
+}
+
+function resetForm() {
+  if (!confirm('⚠️ 入力内容をすべてクリアします。よろしいですか？')) return;
+  resetFormSilent();
+}
+
+// 初期化
+updateProgress();
+</script>
+</body>
+</html>
