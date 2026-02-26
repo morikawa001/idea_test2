@@ -8,15 +8,16 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
-  background: #f0f4f8;
+  background: #f2f8f5;
   color: #333;
   padding: 20px;
   min-height: 100vh;
 }
 .container { max-width: 720px; margin: 0 auto; }
 
+/* ===== ヘッダー ===== */
 .header {
-  background: linear-gradient(135deg, #1a5276, #2e86c1);
+  background: linear-gradient(135deg, #2d7a5f, #4caf88);
   color: white;
   padding: 24px 28px;
   border-radius: 12px 12px 0 0;
@@ -25,13 +26,14 @@ body {
 .header h1 { font-size: 1.4em; margin-bottom: 6px; }
 .header p  { font-size: 0.85em; opacity: 0.88; }
 
+/* ===== ステッパー ===== */
 .stepper {
   display: flex;
   background: white;
   padding: 14px 20px;
   gap: 4px;
   align-items: center;
-  border-bottom: 1px solid #d6eaf8;
+  border-bottom: 1px solid #d4eddf;
   overflow-x: auto;
 }
 .step-dot {
@@ -41,40 +43,42 @@ body {
 .step-circle {
   width: 30px; height: 30px;
   border-radius: 50%;
-  background: #d6eaf8;
-  color: #7fb3d3;
+  background: #d4eddf;
+  color: #7fba9e;
   display: flex; align-items: center; justify-content: center;
   font-size: 0.75em; font-weight: bold;
   transition: all 0.4s;
 }
-.step-circle.done   { background: #27ae60; color: white; }
-.step-circle.active { background: #2e86c1; color: white; box-shadow: 0 0 0 4px #aed6f1; }
+.step-circle.done   { background: #4caf88; color: white; }
+.step-circle.active { background: #2d7a5f; color: white; box-shadow: 0 0 0 4px #b0ddc8; }
 .step-label { font-size: 0.65em; color: #888; text-align: center; }
-.step-label.active { color: #1a5276; font-weight: bold; }
-.step-line { height: 2px; background: #d6eaf8; flex: 0.3; border-radius: 1px; }
-.step-line.done { background: #27ae60; }
+.step-label.active { color: #2d7a5f; font-weight: bold; }
+.step-line { height: 2px; background: #d4eddf; flex: 0.3; border-radius: 1px; }
+.step-line.done { background: #4caf88; }
 
+/* ===== プログレスバー ===== */
 .progress-bar-wrap {
-  background: #eaf4fb;
+  background: #edf7f2;
   padding: 8px 20px;
   display: flex; align-items: center; gap: 10px;
-  font-size: 0.82em; color: #1a5276;
+  font-size: 0.82em; color: #2d7a5f;
 }
 .progress-bar-bg {
   flex: 1; height: 8px;
-  background: #aed6f1; border-radius: 4px; overflow: hidden;
+  background: #a8d8bb; border-radius: 4px; overflow: hidden;
 }
 .progress-bar-fill {
   height: 100%; width: 0%;
-  background: linear-gradient(90deg, #2e86c1, #27ae60);
+  background: linear-gradient(90deg, #4caf88, #82d4a8);
   border-radius: 4px; transition: width 0.5s ease;
 }
 
+/* ===== ナビゲーター ===== */
 .navigator {
   display: flex; align-items: flex-start; gap: 12px;
   background: white;
   padding: 16px 20px;
-  border-bottom: 1px solid #eaf4fb;
+  border-bottom: 1px solid #edf7f2;
   animation: fadeSlideIn 0.4s ease;
 }
 .nav-avatar {
@@ -86,12 +90,12 @@ body {
   to   { transform: translateY(-4px); }
 }
 .nav-bubble {
-  background: #eaf4fb;
+  background: #edf7f2;
   border-radius: 0 12px 12px 12px;
   padding: 10px 14px;
   font-size: 0.88em;
   line-height: 1.6;
-  color: #1a5276;
+  color: #2d7a5f;
   position: relative;
   flex: 1;
 }
@@ -99,16 +103,17 @@ body {
   content: '';
   position: absolute; left: -8px; top: 10px;
   border: 8px solid transparent;
-  border-right-color: #eaf4fb;
+  border-right-color: #edf7f2;
   border-left: 0;
 }
 
+/* ===== ステップブロック ===== */
 .block {
   background: white;
-  border-left: 5px solid #2e86c1;
+  border-left: 5px solid #4caf88;
   border-radius: 0 0 8px 8px;
   padding: 24px 28px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   display: none;
   animation: fadeSlideIn 0.45s ease;
 }
@@ -120,24 +125,26 @@ body {
 
 .block-title {
   font-size: 1.05em; font-weight: bold;
-  color: #1a5276; margin-bottom: 20px;
+  color: #2d7a5f; margin-bottom: 20px;
   padding-bottom: 10px;
-  border-bottom: 2px solid #d6eaf8;
+  border-bottom: 2px solid #d4eddf;
   display: flex; align-items: center; gap: 8px;
 }
 .block-title .badge {
-  font-size: 0.72em; background: #2e86c1; color: white;
+  font-size: 0.72em; background: #4caf88; color: white;
   padding: 2px 10px; border-radius: 10px;
 }
 
+/* ===== 設問 ===== */
 .q-block { margin-bottom: 24px; }
 .q-label {
   font-size: 0.93em; font-weight: bold;
   margin-bottom: 6px; display: block; color: #2c3e50;
 }
-.q-label .req { color: #e74c3c; font-size: 0.82em; margin-left: 4px; }
+.q-label .req { color: #e57373; font-size: 0.82em; margin-left: 4px; }
 .q-hint { font-size: 0.79em; color: #888; margin-bottom: 8px; }
 
+/* ===== フィードバック ===== */
 .feedback-box {
   margin-top: 8px; padding: 8px 12px;
   border-radius: 6px; font-size: 0.82em;
@@ -145,22 +152,24 @@ body {
   transition: all 0.3s; display: none;
 }
 .feedback-box.show { display: block; }
-.feedback-good    { background: #eafaf1; color: #1e8449; border-left: 3px solid #27ae60; }
-.feedback-neutral { background: #fef9e7; color: #9a7d0a; border-left: 3px solid #f1c40f; }
-.feedback-tip     { background: #eaf4fb; color: #1a5276; border-left: 3px solid #2e86c1; }
+.feedback-good    { background: #edf7f2; color: #2d7a5f; border-left: 3px solid #4caf88; }
+.feedback-neutral { background: #fef9e7; color: #9a7d0a; border-left: 3px solid #f0c040; }
+.feedback-tip     { background: #e8f5f0; color: #2d7a5f; border-left: 3px solid #82d4a8; }
 
+/* ===== フォーム部品 ===== */
 select, input[type="text"], textarea {
   width: 100%; padding: 10px 13px;
-  border: 1.5px solid #bdc3c7; border-radius: 7px;
+  border: 1.5px solid #c5d9cc; border-radius: 7px;
   font-size: 0.92em; font-family: inherit;
   background: #fdfefe; transition: border 0.2s, box-shadow 0.2s;
 }
 select:focus, input:focus, textarea:focus {
-  outline: none; border-color: #2e86c1;
-  background: #eaf4fb; box-shadow: 0 0 0 3px rgba(46,134,193,0.12);
+  outline: none; border-color: #4caf88;
+  background: #edf7f2; box-shadow: 0 0 0 3px rgba(76,175,136,0.15);
 }
 textarea { resize: vertical; min-height: 80px; }
 
+/* ===== ラジオ・チェック ===== */
 .radio-group, .check-group {
   display: flex; flex-direction: column; gap: 8px;
 }
@@ -168,40 +177,44 @@ textarea { resize: vertical; min-height: 80px; }
   display: flex; align-items: flex-start; gap: 10px;
   font-size: 0.90em; cursor: pointer;
   padding: 9px 14px;
-  border: 1.5px solid #d5d8dc; border-radius: 8px;
+  border: 1.5px solid #d4eddf; border-radius: 8px;
   transition: all 0.2s; background: #fdfefe;
 }
-.radio-group label:hover, .check-group label:hover { background: #eaf4fb; border-color: #aed6f1; }
-.radio-group label.selected, .check-group label.selected {
-  background: #eaf4fb; border-color: #2e86c1;
-  box-shadow: 0 0 0 2px rgba(46,134,193,0.15);
+.radio-group label:hover, .check-group label:hover {
+  background: #edf7f2; border-color: #a8d8bb;
 }
-.radio-group input, .check-group input { margin-top: 2px; accent-color: #2e86c1; flex-shrink: 0; }
+.radio-group label.selected, .check-group label.selected {
+  background: #edf7f2; border-color: #4caf88;
+  box-shadow: 0 0 0 2px rgba(76,175,136,0.18);
+}
+.radio-group input, .check-group input {
+  margin-top: 2px; accent-color: #4caf88; flex-shrink: 0;
+}
 
+/* ===== その他テキスト ===== */
 .other-input-wrap {
   display: none;
   margin-top: 8px;
   padding: 10px 14px;
-  background: #f7fbff;
+  background: #f4fbf7;
   border-radius: 6px;
-  border: 1.5px dashed #aed6f1;
+  border: 1.5px dashed #a8d8bb;
   animation: fadeSlideIn 0.3s ease;
 }
 .other-input-wrap.show { display: block; }
-.other-input-wrap textarea {
-  min-height: 60px;
-  background: white;
-}
+.other-input-wrap textarea { min-height: 60px; background: white; }
 
+/* ===== ボタン ===== */
 .nav-btn-row {
   display: flex; gap: 12px;
   justify-content: space-between;
   margin-top: 28px; flex-wrap: wrap;
 }
-.btn-prev    { background: #d5d8dc; color: #555; }
-.btn-next    { background: #2e86c1; color: white; flex: 1; }
-.btn-preview { background: #148f77; color: white; flex: 1; }
-.btn-reset   { background: #aab7b8; color: white; }
+.btn-prev    { background: #dce5df; color: #5a6b5e; }
+.btn-next    { background: #4caf88; color: white; flex: 1; }
+.btn-preview { background: #2d7a5f; color: white; flex: 1; }
+.btn-reset   { background: #b2c5ba; color: white; }
+.btn-finish  { background: #2d7a5f; color: white; }
 button {
   padding: 12px 22px; border: none; border-radius: 8px;
   font-size: 0.95em; font-weight: bold; cursor: pointer;
@@ -210,6 +223,7 @@ button {
 button:hover  { opacity: 0.88; }
 button:active { transform: scale(0.97); }
 
+/* ===== アニメーション ===== */
 .check-anim {
   display: inline-block;
   animation: popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
@@ -220,13 +234,11 @@ button:active { transform: scale(0.97); }
   100% { transform: scale(1); opacity: 1; }
 }
 
-/* ============================================================
-   モーダル共通
-============================================================ */
+/* ===== モーダル共通 ===== */
 .modal-overlay {
   display: none; position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,0.55); z-index: 1000;
+  background: rgba(0,0,0,0.50); z-index: 1000;
   align-items: center; justify-content: center;
 }
 .modal-overlay.active { display: flex; }
@@ -234,27 +246,25 @@ button:active { transform: scale(0.97); }
   background: white; border-radius: 14px;
   padding: 28px; max-width: 640px; width: 94%;
   max-height: 88vh; overflow-y: auto;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.22);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.18);
   animation: fadeSlideIn 0.35s ease;
 }
-.modal h2 { color: #1a5276; margin-bottom: 12px; font-size: 1.1em; }
+.modal h2 { color: #2d7a5f; margin-bottom: 12px; font-size: 1.1em; }
 .modal pre {
-  background: #f4f6f7; padding: 14px; border-radius: 8px;
+  background: #f4f8f6; padding: 14px; border-radius: 8px;
   font-size: 0.81em; white-space: pre-wrap; line-height: 1.75;
-  font-family: 'Courier New', monospace; border: 1px solid #d5d8dc;
+  font-family: 'Courier New', monospace; border: 1px solid #d4eddf;
 }
 .modal-btn-row { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
-.btn-mail  { background: #2e86c1; color: white; }
-.btn-dl    { background: #148f77; color: white; }
-.btn-close { background: #aab7b8; color: white; }
+.btn-mail  { background: #4caf88; color: white; }
+.btn-dl    { background: #2d7a5f; color: white; }
+.btn-close { background: #b2c5ba; color: white; }
 
-/* ============================================================
-   ▼▼▼ 感謝メッセージモーダル（新規追加）
-============================================================ */
+/* ===== 感謝モーダル ===== */
 .thank-modal-overlay {
   display: none; position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,0.60); z-index: 2000;
+  background: rgba(0,0,0,0.55); z-index: 2000;
   align-items: center; justify-content: center;
 }
 .thank-modal-overlay.active { display: flex; }
@@ -262,7 +272,7 @@ button:active { transform: scale(0.97); }
   background: white; border-radius: 20px;
   padding: 44px 36px; max-width: 440px; width: 92%;
   text-align: center;
-  box-shadow: 0 12px 48px rgba(0,0,0,0.25);
+  box-shadow: 0 12px 48px rgba(0,0,0,0.20);
   animation: thankPop 0.5s cubic-bezier(0.175,0.885,0.32,1.275);
 }
 @keyframes thankPop {
@@ -271,8 +281,7 @@ button:active { transform: scale(0.97); }
   100% { opacity: 1; transform: scale(1); }
 }
 .thank-icon {
-  font-size: 4em;
-  margin-bottom: 16px;
+  font-size: 4em; margin-bottom: 16px;
   animation: iconBounce 0.6s 0.3s cubic-bezier(0.175,0.885,0.32,1.275) both;
 }
 @keyframes iconBounce {
@@ -282,18 +291,32 @@ button:active { transform: scale(0.97); }
 }
 .thank-title {
   font-size: 1.45em; font-weight: bold;
-  color: #1a5276; margin-bottom: 12px;
+  color: #2d7a5f; margin-bottom: 12px;
 }
 .thank-body {
   font-size: 0.92em; color: #555;
-  line-height: 1.8; margin-bottom: 28px;
+  line-height: 1.9; margin-bottom: 16px;
 }
-.thank-body strong { color: #2e86c1; }
-.thank-btn-row {
-  display: flex; flex-direction: column; gap: 10px;
+.thank-body strong { color: #4caf88; }
+.thank-reply-box {
+  background: #edf7f2;
+  border-left: 4px solid #4caf88;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 0 0 24px;
+  font-size: 0.88em;
+  color: #2d7a5f;
+  text-align: left;
+  line-height: 1.7;
 }
+.thank-reply-box .reply-email {
+  font-weight: bold;
+  word-break: break-all;
+  color: #1a5c40;
+}
+.thank-btn-row { display: flex; flex-direction: column; gap: 10px; }
 .btn-new-idea {
-  background: linear-gradient(135deg, #1a5276, #2e86c1);
+  background: linear-gradient(135deg, #2d7a5f, #4caf88);
   color: white; padding: 13px 20px;
   border: none; border-radius: 10px;
   font-size: 0.95em; font-weight: bold;
@@ -310,13 +333,54 @@ button:active { transform: scale(0.97); }
   transition: opacity 0.2s;
 }
 .btn-just-close:hover { opacity: 0.75; }
-/* ▲▲▲ 感謝モーダルここまで ▲▲▲ */
+
+/* ===== 終了画面 ===== */
+.end-screen {
+  display: none;
+  background: white;
+  border-radius: 0 0 12px 12px;
+  padding: 56px 36px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  animation: fadeSlideIn 0.5s ease;
+}
+.end-screen.active { display: block; }
+.end-icon {
+  font-size: 4.5em;
+  margin-bottom: 20px;
+  animation: iconBounce 0.6s 0.2s cubic-bezier(0.175,0.885,0.32,1.275) both;
+}
+.end-title {
+  font-size: 1.55em; font-weight: bold;
+  color: #2d7a5f; margin-bottom: 16px;
+}
+.end-divider {
+  width: 60px; height: 3px;
+  background: linear-gradient(90deg, #4caf88, #82d4a8);
+  border-radius: 2px; margin: 0 auto 28px;
+}
+.end-body {
+  font-size: 0.95em; color: #555;
+  line-height: 2.1; margin-bottom: 36px;
+}
+.end-body strong { color: #4caf88; }
+.btn-restart {
+  background: #edf7f2; color: #2d7a5f;
+  border: 2px solid #4caf88;
+  padding: 12px 32px; border-radius: 8px;
+  font-size: 0.93em; font-weight: bold;
+  cursor: pointer; font-family: inherit;
+  transition: all 0.2s;
+}
+.btn-restart:hover  { background: #d4eddf; }
+.btn-restart:active { transform: scale(0.97); }
 
 @media(max-width:600px){
   .nav-btn-row { flex-direction: column; }
   button { width: 100%; }
   .stepper { gap: 2px; padding: 10px 8px; }
   .step-label { font-size: 0.58em; }
+  .end-screen { padding: 40px 20px; }
 }
 </style>
 </head>
@@ -327,6 +391,7 @@ button:active { transform: scale(0.97); }
     <p>現場の気づきやアイデアをカタチにします。3〜5分で入力できます。</p>
   </div>
 
+  <!-- ステッパー -->
   <div class="stepper" id="stepper">
     <div class="step-dot">
       <div class="step-circle active" id="sc0">1</div>
@@ -354,14 +419,16 @@ button:active { transform: scale(0.97); }
     </div>
   </div>
 
-  <div class="progress-bar-wrap">
-    <span id="progress-label">0 / 13 項目入力済み</span>
+  <!-- プログレスバー -->
+  <div class="progress-bar-wrap" id="progressWrap">
+    <span id="progress-label">0 / 14 項目入力済み</span>
     <div class="progress-bar-bg">
       <div class="progress-bar-fill" id="progressFill"></div>
     </div>
   </div>
 
-  <div class="navigator">
+  <!-- ナビゲーター -->
+  <div class="navigator" id="navigator">
     <div class="nav-avatar">🤖</div>
     <div class="nav-bubble" id="navBubble">
       こんにちは！現場のアイデアやお困りごとを教えてください。<br>
@@ -374,6 +441,7 @@ button:active { transform: scale(0.97); }
     <!-- ステップ1：基本情報 -->
     <div class="block active" id="step0">
       <div class="block-title">📋 第1ステップ：基本情報</div>
+
       <div class="q-block">
         <label class="q-label">Q1. 所属部署 <span class="req">★必須</span></label>
         <select id="q1" required onchange="onSelectChange('q1')">
@@ -386,12 +454,25 @@ button:active { transform: scale(0.97); }
         </select>
         <div class="feedback-box feedback-good" id="fb-q1"></div>
       </div>
+
       <div class="q-block">
         <label class="q-label">Q2. 氏名 <span class="req">★必須</span></label>
-        <input type="text" id="q2" placeholder="例：山田 太郎（匿名希望の場合は「匿名」と入力可）"
+        <div class="q-hint">👤 フルネームでご記入ください（匿名での受付はできません）</div>
+        <input type="text" id="q2"
+               placeholder="例：山田 太郎"
                oninput="onTextInput('q2')" required>
         <div class="feedback-box" id="fb-q2"></div>
       </div>
+
+      <div class="q-block">
+        <label class="q-label">Q2-b. 返信用メールアドレス <span class="req">★必須</span></label>
+        <div class="q-hint">📧 アイデアの検討結果をこちらのアドレスにご返信します</div>
+        <input type="text" id="q2b"
+               placeholder="例：yamada.taro@example.com"
+               oninput="onEmailInput('q2b')" required>
+        <div class="feedback-box" id="fb-q2b"></div>
+      </div>
+
       <div class="q-block">
         <label class="q-label">Q3. 職種 <span class="req">★必須</span></label>
         <div class="radio-group" id="q3">
@@ -405,6 +486,7 @@ button:active { transform: scale(0.97); }
         </div>
         <div class="feedback-box" id="fb-q3"></div>
       </div>
+
       <div class="nav-btn-row">
         <button type="button" class="btn-next" onclick="goNext(0)">次へ：現場の課題 →</button>
       </div>
@@ -413,6 +495,7 @@ button:active { transform: scale(0.97); }
     <!-- ステップ2：現場の課題 -->
     <div class="block" id="step1">
       <div class="block-title">🔍 第2ステップ：現場の課題 <span class="badge">P：対象・背景</span></div>
+
       <div class="q-block">
         <label class="q-label">Q4. 誰が一番困っていますか？ <span class="req">★必須</span></label>
         <div class="radio-group" id="q4">
@@ -423,6 +506,7 @@ button:active { transform: scale(0.97); }
         </div>
         <div class="feedback-box" id="fb-q4"></div>
       </div>
+
       <div class="q-block">
         <label class="q-label">Q5. 困りごとの発生頻度は？ <span class="req">★必須</span></label>
         <div class="radio-group" id="q5">
@@ -434,6 +518,7 @@ button:active { transform: scale(0.97); }
         </div>
         <div class="feedback-box" id="fb-q5"></div>
       </div>
+
       <div class="q-block">
         <label class="q-label">Q6. どのような悪影響（ペイン）が生じていますか？ <span class="req">★必須</span>（複数選択可）</label>
         <div class="check-group" id="q6">
@@ -451,6 +536,7 @@ button:active { transform: scale(0.97); }
         </div>
         <div class="feedback-box" id="fb-q6"></div>
       </div>
+
       <div class="q-block">
         <label class="q-label">Q7. 困っている具体的な場面を教えてください</label>
         <div class="q-hint">💬 いつ・どこで・誰が・何が起きるかを書くと伝わりやすいです</div>
@@ -458,6 +544,7 @@ button:active { transform: scale(0.97); }
                   oninput="onTextareaInput('q7')"></textarea>
         <div class="feedback-box" id="fb-q7"></div>
       </div>
+
       <div class="nav-btn-row">
         <button type="button" class="btn-prev" onclick="goPrev(1)">← 戻る</button>
         <button type="button" class="btn-next" onclick="goNext(1)">次へ：現状の対応 →</button>
@@ -467,12 +554,14 @@ button:active { transform: scale(0.97); }
     <!-- ステップ3：現在の対応 -->
     <div class="block" id="step2">
       <div class="block-title">🔄 第3ステップ：現在の対応とその限界 <span class="badge">C：比較対照</span></div>
+
       <div class="q-block">
         <label class="q-label">Q8. 現在、現場ではどのように工夫して乗り切っていますか？</label>
         <textarea id="q8" placeholder="例：チューブをまとめてテープで留めている、スタッフが常に付き添う など"
                   oninput="onTextareaInput('q8')"></textarea>
         <div class="feedback-box" id="fb-q8"></div>
       </div>
+
       <div class="q-block">
         <label class="q-label">Q9. 今のやり方の「限界」は何ですか？（複数選択可）</label>
         <div class="check-group" id="q9">
@@ -484,6 +573,7 @@ button:active { transform: scale(0.97); }
         </div>
         <div class="feedback-box" id="fb-q9"></div>
       </div>
+
       <div class="nav-btn-row">
         <button type="button" class="btn-prev" onclick="goPrev(2)">← 戻る</button>
         <button type="button" class="btn-next" onclick="goNext(2)">次へ：アイデア →</button>
@@ -493,6 +583,7 @@ button:active { transform: scale(0.97); }
     <!-- ステップ4：アイデア -->
     <div class="block" id="step3">
       <div class="block-title">💡 第4ステップ：あなたのアイデア <span class="badge">I：介入</span></div>
+
       <div class="q-block">
         <label class="q-label">Q10. どのようなアイテム・システムがあれば解決すると思いますか？ <span class="req">★必須</span></label>
         <div class="q-hint">💭 完成形でなくて大丈夫！「こんなものがあれば…」という段階のアイデアでも歓迎します</div>
@@ -500,6 +591,7 @@ button:active { transform: scale(0.97); }
                   oninput="onIdeaInput()" required></textarea>
         <div class="feedback-box" id="fb-q10"></div>
       </div>
+
       <div class="q-block">
         <label class="q-label">Q11. アイデアのカテゴリー（一番近いもの） <span class="req">★必須</span></label>
         <div class="q-hint">⚡ 一番近いものを選んでください</div>
@@ -511,6 +603,7 @@ button:active { transform: scale(0.97); }
         </div>
         <div class="feedback-box" id="fb-q11"></div>
       </div>
+
       <div class="nav-btn-row">
         <button type="button" class="btn-prev" onclick="goPrev(3)">← 戻る</button>
         <button type="button" class="btn-next" onclick="goNext(3)">次へ：期待効果 →</button>
@@ -520,6 +613,7 @@ button:active { transform: scale(0.97); }
     <!-- ステップ5：期待される効果 -->
     <div class="block" id="step4">
       <div class="block-title">📊 第5ステップ：期待される効果 <span class="badge">O：アウトカム</span></div>
+
       <div class="q-block">
         <label class="q-label">Q12. このアイデアが実現すると、何が改善しますか？ <span class="req">★必須</span>（複数選択可）</label>
         <div class="check-group" id="q12">
@@ -537,6 +631,7 @@ button:active { transform: scale(0.97); }
         </div>
         <div class="feedback-box" id="fb-q12"></div>
       </div>
+
       <div class="q-block">
         <label class="q-label">Q13. どのくらい良くなりそうですか？（わかる範囲で）</label>
         <div class="q-hint">💬 記入例：1日あたり1時間の業務削減 / インシデントが半減 / 術後離床が1日早まる など</div>
@@ -544,21 +639,41 @@ button:active { transform: scale(0.97); }
                   oninput="onTextareaInput('q13')"></textarea>
         <div class="feedback-box" id="fb-q13"></div>
       </div>
+
       <div class="q-block">
         <label class="q-label">Q14. 参考になる写真・資料があればメールに添付してください（任意）</label>
         <div class="q-hint">📎 現在の問題の様子、参考にしたい製品画像、手書きスケッチなど（JPG・PNG・PDF対応）をメール送信時に直接添付してください。</div>
       </div>
+
       <div class="nav-btn-row">
         <button type="button" class="btn-prev" onclick="goPrev(4)">← 戻る</button>
         <button type="button" class="btn-preview" onclick="showPreview()">👁️ 内容を確認して送信</button>
       </div>
-      <div style="text-align:center; margin-top:12px;">
-        <button type="button" class="btn-reset" onclick="resetForm()">🔄 最初からやり直す</button>
+      <div style="display:flex; gap:12px; justify-content:center; margin-top:12px; flex-wrap:wrap;">
+        <button type="button" class="btn-reset"  onclick="resetForm()">🔄 最初からやり直す</button>
+        <button type="button" class="btn-finish" onclick="showEndScreen()">✅ 終了</button>
       </div>
     </div>
 
   </form>
-</div>
+
+  <!-- 終了画面 -->
+  <div class="end-screen" id="endScreen">
+    <div class="end-icon">🌿</div>
+    <div class="end-title">ご協力ありがとうございました</div>
+    <div class="end-divider"></div>
+    <div class="end-body">
+      いただいた現場の声は、<strong>医療をよりよくするための大切な一歩</strong>です。<br>
+      担当部署にて内容を確認し、<strong>検討結果をメールにてご連絡</strong>いたします。<br><br>
+      引き続き、現場での気づきやアイデアをぜひお寄せください。<br>
+      皆さまのご協力に、心より感謝申し上げます。💚
+    </div>
+    <button type="button" class="btn-restart" onclick="restartFromEnd()">
+      🔄 新しいアイデアを提案する
+    </button>
+  </div>
+
+</div><!-- /container -->
 
 <!-- プレビュー＆送信モーダル -->
 <div class="modal-overlay" id="previewModal">
@@ -566,21 +681,20 @@ button:active { transform: scale(0.97); }
     <h2>📋 入力内容の確認</h2>
     <p style="font-size:0.85em;color:#666;margin-bottom:12px;">以下の内容で提出します。送信方法を選んでください。</p>
     <pre id="previewText"></pre>
-    <div id="picoBox" style="margin-top:14px; padding:14px; background:#eaf4fb; border-radius:8px;
-         font-size:0.83em; line-height:1.9; border-left:4px solid #2e86c1; display:none;">
+    <div id="picoBox" style="margin-top:14px; padding:14px; background:#edf7f2; border-radius:8px;
+         font-size:0.83em; line-height:1.9; border-left:4px solid #4caf88; display:none;">
       <strong>🔬 自動生成：研究計画骨格（PICO）</strong><br>
       <span id="picoContent"></span>
     </div>
     <div class="modal-btn-row">
       <button class="btn-mail"  onclick="sendMail()">✉️ メールで送信</button>
       <button class="btn-dl"    onclick="downloadTxt()">💾 TXTで保存</button>
-      <!-- ▼ 閉じるボタン：感謝モーダルを表示するように変更 -->
       <button class="btn-close" onclick="closePreviewAndThank()">✖ 閉じる</button>
     </div>
   </div>
 </div>
 
-<!-- ▼▼▼ 感謝メッセージモーダル（新規追加） ▼▼▼ -->
+<!-- 感謝メッセージモーダル -->
 <div class="thank-modal-overlay" id="thankModal">
   <div class="thank-modal">
     <div class="thank-icon">🎉</div>
@@ -589,8 +703,12 @@ button:active { transform: scale(0.97); }
       <strong id="thank-name-label"></strong><br>
       あなたの現場からの声が、<br>
       <strong>医療をよりよくするための第一歩</strong>になります。<br><br>
-      提案内容は担当部署にて確認・検討いたします。<br>
-      引き続きアイデアをお寄せください😊
+      いただいたアイデアは担当部署にて内容を確認し、<br>
+      <strong>検討結果を登録いただいたメールアドレスへ返信</strong>いたします。<br>
+      しばらくお待ちください😊
+    </div>
+    <div class="thank-reply-box">
+      📧 返信先：<span class="reply-email" id="thank-reply-email"></span>
     </div>
     <div class="thank-btn-row">
       <button class="btn-new-idea" onclick="startNewIdea()">💡 新しいアイデアを提案する</button>
@@ -598,13 +716,31 @@ button:active { transform: scale(0.97); }
     </div>
   </div>
 </div>
-<!-- ▲▲▲ 感謝モーダルここまで ▲▲▲ -->
 
 <script>
 // ============================================================
 //  設定
 // ============================================================
 const MAIL_TO = 'ns.morizo@gmail.com';
+
+// 匿名NGワードリスト（小文字で比較）
+const NAME_NG_WORDS = ['匿名', '無記名', 'anonymous', 'anon', '名無し', 'なし', 'ない', 'none', 'no name'];
+
+// ============================================================
+//  UI要素の表示・非表示ヘルパー
+// ============================================================
+const FORM_UI_IDS = ['stepper', 'progressWrap', 'navigator', 'ideaForm'];
+
+function hideFormUI() {
+  FORM_UI_IDS.forEach(id => {
+    document.getElementById(id).style.display = 'none';
+  });
+}
+function showFormUI() {
+  FORM_UI_IDS.forEach(id => {
+    document.getElementById(id).style.display = '';
+  });
+}
 
 // ============================================================
 //  ステップ管理
@@ -644,11 +780,29 @@ function showStep(step) {
 // ============================================================
 //  ステップ検証
 // ============================================================
+function isNGName(val) {
+  return NAME_NG_WORDS.some(w => val.toLowerCase() === w.toLowerCase());
+}
+
 const STEP_REQUIRED = [
   () => {
     const errs = [];
-    if (!getVal('q1'))   errs.push('Q1 所属部署');
-    if (!getVal('q2'))   errs.push('Q2 氏名');
+    if (!getVal('q1')) errs.push('Q1 所属部署');
+
+    const nameVal = getVal('q2');
+    if (!nameVal) {
+      errs.push('Q2 氏名');
+    } else if (isNGName(nameVal)) {
+      errs.push('Q2 氏名（匿名での受付はできません。お名前をご記入ください）');
+    }
+
+    const emailVal = getVal('q2b');
+    if (!emailVal) {
+      errs.push('Q2-b 返信用メールアドレス');
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+      errs.push('Q2-b メールアドレスの形式が正しくありません');
+    }
+
     if (!getRadio('q3')) errs.push('Q3 職種');
     return errs;
   },
@@ -676,7 +830,7 @@ const STEP_REQUIRED = [
 function goNext(step) {
   const errs = STEP_REQUIRED[step]();
   if (errs.length > 0) {
-    alert('⚠️ 以下の必須項目が未入力です：\n\n' + errs.join('\n'));
+    alert('⚠️ 以下の必須項目を確認してください：\n\n' + errs.join('\n'));
     return;
   }
   showStep(step + 1);
@@ -740,18 +894,19 @@ function toggleOtherInput(checkId, wrapId) {
 }
 
 // ============================================================
-//  プログレスバー
+//  プログレスバー（14項目）
 // ============================================================
 function updateProgress() {
   const items = [
-    getVal('q1'), getVal('q2'), getRadio('q3'), getRadio('q4'),
+    getVal('q1'), getVal('q2'), getVal('q2b'),
+    getRadio('q3'), getRadio('q4'),
     getRadio('q5'), getChecks('q6').length > 0 ? '1' : '',
     getVal('q7'), getVal('q8'), getChecks('q9').length > 0 ? '1' : '',
     getVal('q10'), getRadio('q11'), getChecks('q12').length > 0 ? '1' : '', getVal('q13')
   ];
   const filled = items.filter(v => v !== '').length;
-  document.getElementById('progress-label').textContent = `${filled} / 13 項目入力済み`;
-  document.getElementById('progressFill').style.width = `${Math.round(filled / 13 * 100)}%`;
+  document.getElementById('progress-label').textContent = `${filled} / 14 項目入力済み`;
+  document.getElementById('progressFill').style.width = `${Math.round(filled / 14 * 100)}%`;
 }
 document.addEventListener('change', updateProgress);
 document.addEventListener('input',  updateProgress);
@@ -764,34 +919,83 @@ function onSelectChange(id) {
   if (v) showFeedback(id, `✅ 「${v}」で登録します！`, 'good');
   else   hideFeedback(id);
 }
+
 function onTextInput(id) {
   const v = getVal(id);
   if (!v) { hideFeedback(id); return; }
-  if (v === '匿名') showFeedback(id, '🙈 匿名で受け付けます。安心してどうぞ。', 'tip');
-  else if (v.length >= 2) showFeedback(id, `✅ ${v} さん、よろしくお願いします！`, 'good');
+  if (isNGName(v)) {
+    showFeedback(id, '⚠️ 匿名での受付はできません。お名前をフルネームでご記入ください。', 'neutral');
+    return;
+  }
+  if (v.length < 2) {
+    showFeedback(id, '✏️ お名前をフルネームでご記入ください。', 'neutral');
+    return;
+  }
+  showFeedback(id, `✅ ${v} さん、よろしくお願いします！`, 'good');
 }
+
+function onEmailInput(id) {
+  const v = getVal(id);
+  if (!v) { hideFeedback(id); return; }
+  const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  if (isEmail) {
+    showFeedback(id, `✅ 「${v}」に検討結果をお送りします！`, 'good');
+  } else {
+    showFeedback(id, '⚠️ メールアドレスの形式を確認してください（例：yamada@example.com）', 'neutral');
+  }
+}
+
 function onRadioChange(name) {
   highlightSelected(name);
   const v = getRadio(name);
   const feedbackMap = {
-    q3: { '医師':'🩺 医師の視点でのアイデア、大変参考になります！', '看護師':'💉 看護師さんの現場感覚はアイデアの宝庫です！', '薬剤師':'💊 薬剤師さんの専門知識が解決のカギになることも。', '臨床工学技士':'⚙️ 機器・システム系のアイデアも大歓迎です！', '理学療法士・作業療法士':'🏃 リハビリ現場の知見、ぜひ聞かせてください！', '事務職':'📋 事務・管理系の改善アイデアも重要です！', 'その他':'👤 どんな立場からのアイデアも大切にします！' },
-    q4: { '患者さん':'🏥 患者中心のアイデアは最も価値があります！', '自分自身・自部署のスタッフ':'👥 現場スタッフの声が改善の第一歩です！', '他部署のスタッフ':'🤝 部署間の連携改善につながりそうですね。', '病院全体':'🏢 病院全体のシステム改善は大きな影響力があります！' },
-    q5: { '毎日複数回':'🔴 毎日複数回とは、かなり緊急度が高いですね。早急な解決が必要そうです。', '毎日1回程度':'🟠 毎日発生しているなら、確実に解決策が必要です。', '週に数回':'🟡 週に数回の発生でも、積み重なると大きな負担になりますね。', '月に数回':'🟢 頻度は低くても、対策しておく価値は十分あります。', '稀だが発生すると重大':'⚠️ ハイリスクな事象は頻度が低くても最優先で対策が必要です！' },
-    q11: { '医療機器・器具の新規開発や改良':'🔧 機器・器具系のアイデアですね！専門担当者と連携して検討します。', 'アプリ・RPAによる業務自動化・電子化':'💻 デジタル化・自動化のアイデアですね！情報システム担当と連携します。', '既存製品の新しい使い方（転用・適応外使用など）':'♻️ 既存品の転用とは面白い発想ですね！薬事確認も含めて検討します。', '運用ルールやマニュアルの変更':'📄 運用改善のアイデアですね。比較的すぐに実行できる可能性があります！' }
+    q3: {
+      '医師':'🩺 医師の視点でのアイデア、大変参考になります！',
+      '看護師':'💉 看護師さんの現場感覚はアイデアの宝庫です！',
+      '薬剤師':'💊 薬剤師さんの専門知識が解決のカギになることも。',
+      '臨床工学技士':'⚙️ 機器・システム系のアイデアも大歓迎です！',
+      '理学療法士・作業療法士':'🏃 リハビリ現場の知見、ぜひ聞かせてください！',
+      '事務職':'📋 事務・管理系の改善アイデアも重要です！',
+      'その他':'👤 どんな立場からのアイデアも大切にします！'
+    },
+    q4: {
+      '患者さん':'🏥 患者中心のアイデアは最も価値があります！',
+      '自分自身・自部署のスタッフ':'👥 現場スタッフの声が改善の第一歩です！',
+      '他部署のスタッフ':'🤝 部署間の連携改善につながりそうですね。',
+      '病院全体':'🏢 病院全体のシステム改善は大きな影響力があります！'
+    },
+    q5: {
+      '毎日複数回':'🔴 毎日複数回とは、かなり緊急度が高いですね。早急な解決が必要そうです。',
+      '毎日1回程度':'🟠 毎日発生しているなら、確実に解決策が必要です。',
+      '週に数回':'🟡 週に数回の発生でも、積み重なると大きな負担になりますね。',
+      '月に数回':'🟢 頻度は低くても、対策しておく価値は十分あります。',
+      '稀だが発生すると重大':'⚠️ ハイリスクな事象は頻度が低くても最優先で対策が必要です！'
+    },
+    q11: {
+      '医療機器・器具の新規開発や改良':'🔧 機器・器具系のアイデアですね！専門担当者と連携して検討します。',
+      'アプリ・RPAによる業務自動化・電子化':'💻 デジタル化・自動化のアイデアですね！情報システム担当と連携します。',
+      '既存製品の新しい使い方（転用・適応外使用など）':'♻️ 既存品の転用とは面白い発想ですね！薬事確認も含めて検討します。',
+      '運用ルールやマニュアルの変更':'📄 運用改善のアイデアですね。比較的すぐに実行できる可能性があります！'
+    }
   };
   const msg = (feedbackMap[name] || {})[v];
   if (msg) showFeedback(name, msg, 'good');
 }
+
 function onCheckChange(name) {
   highlightChecked(name);
   const checks = getChecks(name);
   if (name === 'q6') {
     if (checks.length === 0) { hideFeedback('q6'); return; }
     const hasOther = checks.includes('その他');
-    if (checks.length === 1 && hasOther)    showFeedback('q6', '📝 下の欄に具体的な内容を記入してください。', 'tip');
-    else if (checks.length === 1)           showFeedback('q6', `✅ 「${checks[0]}」を選択しました。他にも該当するものがあれば追加してください。`, 'good');
-    else if (checks.length >= 3)            showFeedback('q6', `⚡ ${checks.length}つの問題が重なっているんですね。複合的な課題です。アイデアで一気に解決しましょう！`, 'tip');
-    else                                    showFeedback('q6', `✅ ${checks.length}つ選択済み。他にもあれば追加してください。`, 'good');
+    if (checks.length === 1 && hasOther)
+      showFeedback('q6', '📝 下の欄に具体的な内容を記入してください。', 'tip');
+    else if (checks.length === 1)
+      showFeedback('q6', `✅ 「${checks[0]}」を選択しました。他にも該当するものがあれば追加してください。`, 'good');
+    else if (checks.length >= 3)
+      showFeedback('q6', `⚡ ${checks.length}つの問題が重なっているんですね。複合的な課題です。アイデアで一気に解決しましょう！`, 'tip');
+    else
+      showFeedback('q6', `✅ ${checks.length}つ選択済み。他にもあれば追加してください。`, 'good');
   }
   if (name === 'q9') {
     if (checks.length === 0) { hideFeedback('q9'); return; }
@@ -800,12 +1004,17 @@ function onCheckChange(name) {
   if (name === 'q12') {
     if (checks.length === 0) { hideFeedback('q12'); return; }
     const hasOther = checks.includes('その他');
-    if (checks.length === 1 && hasOther)    showFeedback('q12', '📝 下の欄に期待される効果を記入してください。', 'tip');
-    else if (checks.length === 1)           showFeedback('q12', `✅ 「${checks[0]}」を選択。この効果を軸に提案を進めます！`, 'good');
-    else if (checks.length >= 3)            showFeedback('q12', `🚀 ${checks.length}つの改善効果が期待できる、インパクトの大きいアイデアですね！`, 'good');
-    else                                    showFeedback('q12', `✅ ${checks.length}つの改善効果を期待しています！`, 'good');
+    if (checks.length === 1 && hasOther)
+      showFeedback('q12', '📝 下の欄に期待される効果を記入してください。', 'tip');
+    else if (checks.length === 1)
+      showFeedback('q12', `✅ 「${checks[0]}」を選択。この効果を軸に提案を進めます！`, 'good');
+    else if (checks.length >= 3)
+      showFeedback('q12', `🚀 ${checks.length}つの改善効果が期待できる、インパクトの大きいアイデアですね！`, 'good');
+    else
+      showFeedback('q12', `✅ ${checks.length}つの改善効果を期待しています！`, 'good');
   }
 }
+
 function onTextareaInput(id) {
   const v = getVal(id); if (!v) { hideFeedback(id); return; }
   const len = v.length;
@@ -824,6 +1033,7 @@ function onTextareaInput(id) {
     else        showFeedback('q13', '💡 「〇〇分削減」「〇〇%改善」など数値で表現できると、より実現のイメージが湧きます。', 'tip');
   }
 }
+
 function onIdeaInput() {
   const v = getVal('q10'); if (!v) { hideFeedback('q10'); return; }
   const len = v.length;
@@ -834,12 +1044,13 @@ function onIdeaInput() {
 }
 
 // ============================================================
-//  バリデーション
+//  バリデーション（最終）
 // ============================================================
 function validate() {
   const required = [
     { val: getVal('q1'),                            label: 'Q1 所属部署' },
     { val: getVal('q2'),                            label: 'Q2 氏名' },
+    { val: getVal('q2b'),                           label: 'Q2-b 返信用メールアドレス' },
     { val: getRadio('q3'),                          label: 'Q3 職種' },
     { val: getRadio('q4'),                          label: 'Q4 困っている対象' },
     { val: getRadio('q5'),                          label: 'Q5 発生頻度' },
@@ -851,6 +1062,16 @@ function validate() {
   const missing = required.filter(r => !r.val).map(r => r.label);
   if (missing.length > 0) {
     alert('⚠️ 以下の必須項目が未入力です：\n\n' + missing.join('\n'));
+    return false;
+  }
+  const nameVal = getVal('q2');
+  if (isNGName(nameVal)) {
+    alert('⚠️ 匿名での受付はできません。\nお名前をフルネームでご記入ください。');
+    return false;
+  }
+  const emailVal = getVal('q2b');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+    alert('⚠️ 返信用メールアドレスの形式が正しくありません。\n例：yamada@example.com');
     return false;
   }
   return true;
@@ -871,13 +1092,14 @@ function buildText() {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 【第1ブロック：基本情報】
-Q1. 所属部署    ： ${getVal('q1') || '（未入力）'}
-Q2. 氏名       ： ${getVal('q2') || '（未入力）'}
-Q3. 職種       ： ${getRadio('q3') || '（未選択）'}
+Q1.   所属部署              ： ${getVal('q1')   || '（未入力）'}
+Q2.   氏名                  ： ${getVal('q2')   || '（未入力）'}
+Q2-b. 返信用メールアドレス   ： ${getVal('q2b')  || '（未入力）'}
+Q3.   職種                  ： ${getRadio('q3') || '（未選択）'}
 
 【第2ブロック：現場の課題 — P：対象・背景】
-Q4. 困っている対象  ： ${getRadio('q4') || '（未選択）'}
-Q5. 発生頻度       ： ${getRadio('q5') || '（未選択）'}
+Q4. 困っている対象   ： ${getRadio('q4') || '（未選択）'}
+Q5. 発生頻度        ： ${getRadio('q5') || '（未選択）'}
 Q6. 悪影響（ペイン） ： ${q6}
 Q7. 具体的な場面    ：
 ${getVal('q7') || '（未記入）'}
@@ -933,47 +1155,39 @@ function showPreview() {
 }
 
 // ============================================================
-//  ▼▼▼ モーダル閉じる処理（変更箇所）▼▼▼
+//  モーダル操作
 // ============================================================
-
-// プレビューモーダルの「✖ 閉じる」→ 感謝モーダルへ遷移
 function closePreviewAndThank() {
   document.getElementById('previewModal').classList.remove('active');
-  // 氏名をパーソナライズして表示
-  const name = getVal('q2');
-  const label = (name && name !== '匿名')
-    ? `${name} さん、`
-    : '';
+  const name  = getVal('q2');
+  const email = getVal('q2b');
+  const label = name ? `${name} さん、` : '';
   document.getElementById('thank-name-label').textContent = label;
-  // 感謝モーダルを表示
+  document.getElementById('thank-reply-email').textContent = email || '（未入力）';
   document.getElementById('thankModal').classList.add('active');
 }
-
-// 感謝モーダル：「このまま閉じる」
 function closeThankModal() {
   document.getElementById('thankModal').classList.remove('active');
 }
-
-// 感謝モーダル：「新しいアイデアを提案する」
 function startNewIdea() {
   document.getElementById('thankModal').classList.remove('active');
-  resetFormSilent(); // 確認ダイアログなしでリセット
+  resetFormSilent();
 }
-
-// ▲▲▲ モーダル閉じる処理ここまで ▲▲▲
 
 // ============================================================
 //  メール送信
 // ============================================================
 function sendMail() {
-  const dept = getVal('q1')   || '不明';
-  const name = getVal('q2')   || '匿名';
-  const cat  = getRadio('q11')|| '未選択';
+  const dept  = getVal('q1')    || '不明';
+  const name  = getVal('q2')    || '（未入力）';
+  const email = getVal('q2b')   || '未入力';
+  const cat   = getRadio('q11') || '未選択';
   const subject = encodeURIComponent(`【院内アイデア提案】${cat}｜${dept} ${name}`);
   const body    = encodeURIComponent(
     buildText() + '\n\n' +
     '--- 研究計画骨格（PICO）---\n' +
     buildPico().replace(/<[^>]+>/g, '') + '\n\n' +
+    `【返信先メールアドレス】${email}\n` +
     '※参考写真・資料がある場合はこのメールに直接添付してください。'
   );
   window.location.href = `mailto:${MAIL_TO}?subject=${subject}&body=${body}`;
@@ -983,14 +1197,17 @@ function sendMail() {
 //  TXTダウンロード
 // ============================================================
 function downloadTxt() {
-  const text = buildText() + '\n\n--- 研究計画骨格（PICO）---\n' + buildPico().replace(/<[^>]+>/g, '');
-  const now  = new Date();
-  const ts   = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
-  const name = getVal('q2') || 'unknown';
-  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-  const a    = document.createElement('a');
-  a.href     = URL.createObjectURL(blob);
-  a.download = `idea_${ts}_${name}.txt`;
+  const email = getVal('q2b') || '未入力';
+  const text  = buildText() + '\n\n--- 研究計画骨格（PICO）---\n'
+              + buildPico().replace(/<[^>]+>/g, '')
+              + `\n\n【返信先メールアドレス】${email}`;
+  const now   = new Date();
+  const ts    = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
+  const name  = getVal('q2') || 'unknown';
+  const blob  = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  const a     = document.createElement('a');
+  a.href      = URL.createObjectURL(blob);
+  a.download  = `idea_${ts}_${name}.txt`;
   a.click();
 }
 
@@ -999,18 +1216,40 @@ function downloadTxt() {
 // ============================================================
 function resetFormSilent() {
   document.getElementById('ideaForm').reset();
-  document.querySelectorAll('.feedback-box').forEach(el => { el.className = 'feedback-box'; el.textContent = ''; });
-  document.querySelectorAll('.radio-group label, .check-group label').forEach(lbl => lbl.classList.remove('selected'));
+  document.querySelectorAll('.feedback-box').forEach(el => {
+    el.className = 'feedback-box'; el.textContent = '';
+  });
+  document.querySelectorAll('.radio-group label, .check-group label').forEach(lbl => {
+    lbl.classList.remove('selected');
+  });
   ['q6-other-wrap', 'q12-other-wrap'].forEach(id => {
     document.getElementById(id).classList.remove('show');
   });
   showStep(0);
   updateProgress();
 }
-
 function resetForm() {
   if (!confirm('⚠️ 入力内容をすべてクリアします。よろしいですか？')) return;
   resetFormSilent();
+}
+
+// ============================================================
+//  終了画面
+// ============================================================
+function showEndScreen() {
+  if (!confirm('フォームを終了します。入力内容はクリアされます。よろしいですか？')) return;
+  hideFormUI();
+  document.getElementById('endScreen').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  resetFormSilent();
+}
+
+function restartFromEnd() {
+  document.getElementById('endScreen').classList.remove('active');
+  showFormUI();
+  showStep(0);
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // 初期化
