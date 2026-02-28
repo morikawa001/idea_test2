@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>医療をよくするアイデア＆お困りごと提案フォーム</title>
+<title>医療をよくするアイデア＆お困りごと提案フォーム（対照群）</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -82,7 +82,7 @@ body {
   border-radius: 4px; transition: width 0.5s ease;
 }
 
-/* ===== ナビゲーター ===== */
+/* ===== ナビゲーター（CSS残存・HTML非表示） ===== */
 .navigator {
   display: flex; align-items: flex-start; gap: 12px;
   background: white;
@@ -440,15 +440,6 @@ button:active { transform: scale(0.97); }
     </div>
   </div>
 
-  <!-- ナビゲーター -->
-  <div class="navigator" id="navigator">
-    <div class="nav-avatar">🌱</div>
-    <div class="nav-bubble" id="navBubble">
-      こんにちは！現場のアイデアやお困りごとを教えてください。<br>
-      まず、<strong>あなたの基本情報</strong>から始めましょう。気軽に入力してください😊
-    </div>
-  </div>
-
   <form id="ideaForm" novalidate>
 
     <!-- ステップ1：基本情報 -->
@@ -468,13 +459,11 @@ button:active { transform: scale(0.97); }
       </div>
       <div class="q-block">
         <label class="q-label">Q2. 氏名 <span class="req">★必須</span></label>
-        <div class="q-hint">👤 フルネームでご記入ください（検討結果のご連絡に使用します）</div>
         <input type="text" id="q2" placeholder="例：山田 太郎" oninput="onTextInput('q2')" required>
         <div class="feedback-box" id="fb-q2"></div>
       </div>
       <div class="q-block">
         <label class="q-label">Q2-b. 返信用メールアドレス <span class="req">★必須</span></label>
-        <div class="q-hint">📧 アイデアの検討結果をこちらのアドレスにご返信します</div>
         <input type="text" id="q2b" placeholder="例：yamada.taro@example.com" oninput="onEmailInput('q2b')" required>
         <div class="feedback-box" id="fb-q2b"></div>
       </div>
@@ -498,10 +487,9 @@ button:active { transform: scale(0.97); }
 
     <!-- ステップ2：現場の困りごと -->
     <div class="block" id="step1">
-      <div class="block-title">🔍 第2ステップ：現場の困りごと <span class="badge">P：対象・背景</span></div>
+      <div class="block-title">🔍 第2ステップ：現場の困りごと</div>
       <div class="q-block">
         <label class="q-label">Q4. 誰が一番困っていますか？ <span class="req">★必須</span></label>
-        <div class="q-hint">💡 一番近いものを選んでください</div>
         <div class="radio-group" id="q4">
           <label><input type="radio" name="q4" value="患者さん" onchange="onRadioChange('q4')"> 患者さん</label>
           <label><input type="radio" name="q4" value="自分自身・自部署のスタッフ" onchange="onRadioChange('q4')"> 自分自身・自部署のスタッフ</label>
@@ -533,15 +521,13 @@ button:active { transform: scale(0.97); }
                         onchange="onCheckChange('q6'); toggleOtherInput('q6-other-check','q6-other-wrap')"> その他</label>
         </div>
         <div class="other-input-wrap" id="q6-other-wrap">
-          <div class="q-hint" style="margin-bottom:6px;">📝 具体的にどのような困りごとか教えてください</div>
-          <textarea id="q6-other-text" placeholder="例：記録の転記ミスが起きやすい、情報共有に時間がかかる など" oninput="updateProgress()"></textarea>
+          <textarea id="q6-other-text" placeholder="その他の内容を記入してください" oninput="updateProgress()"></textarea>
         </div>
         <div class="feedback-box" id="fb-q6"></div>
       </div>
       <div class="q-block">
         <label class="q-label">Q7. 具体的にどんな場面で困りますか？</label>
-        <div class="q-hint">💬 「いつ・どこで・誰が・何が起きるか」を思いつくまま書いてみてください</div>
-        <textarea id="q7" placeholder="例：術後、患者さんが複数ルートを持ったまま歩行する際、チューブが引っかかりやすい"
+        <textarea id="q7" placeholder="具体的な場面を記入してください"
                   oninput="onTextareaInput('q7')"></textarea>
         <div class="feedback-box" id="fb-q7"></div>
       </div>
@@ -553,17 +539,15 @@ button:active { transform: scale(0.97); }
 
     <!-- ステップ3：現在の対応 -->
     <div class="block" id="step2">
-      <div class="block-title">🔄 第3ステップ：今の対応とその限界 <span class="badge">C：比較対照</span></div>
+      <div class="block-title">🔄 第3ステップ：今の対応とその限界</div>
       <div class="q-block">
         <label class="q-label">Q8. 今はどのように工夫して対応していますか？</label>
-        <div class="q-hint">💡 「とりあえず〇〇している」という程度でも大丈夫です</div>
-        <textarea id="q8" placeholder="例：チューブをまとめてテープで留めている、スタッフが常に付き添う など"
+        <textarea id="q8" placeholder="現在の対応方法を記入してください"
                   oninput="onTextareaInput('q8')"></textarea>
         <div class="feedback-box" id="fb-q8"></div>
       </div>
       <div class="q-block">
         <label class="q-label">Q9. 今のやり方で「うまくいっていない点」はありますか？（複数選択可）</label>
-        <div class="q-hint">📝 思い当たるものがあれば選んでください</div>
         <div class="check-group" id="q9">
           <label><input type="checkbox" name="q9" value="手作業が多くて時間がかかる" onchange="onCheckChange('q9')"> 手作業が多くて時間がかかる</label>
           <label><input type="checkbox" name="q9" value="人によってやり方や精度にばらつきが出る" onchange="onCheckChange('q9')"> 人によってやり方や精度にばらつきが出る</label>
@@ -581,17 +565,15 @@ button:active { transform: scale(0.97); }
 
     <!-- ステップ4：アイデア -->
     <div class="block" id="step3">
-      <div class="block-title">💡 第4ステップ：あなたのアイデア・ひらめき <span class="badge">I：介入</span></div>
+      <div class="block-title">💡 第4ステップ：あなたのアイデア・ひらめき</div>
       <div class="q-block">
-        <label class="q-label">Q10. 「こんなものがあれば解決しそう」というアイデアを教えてください <span class="req">★必須</span></label>
-        <div class="q-hint">💭 完成したアイデアでなくて大丈夫！「なんとなくこんな感じ…」という段階でも、ぜひ聞かせてください。あなたの現場感覚が一番大切です。</div>
-        <textarea id="q10" rows="5" placeholder="思いつくまま、自由に書いてみてください。どんな小さなアイデアでも歓迎します。"
+        <label class="q-label">Q10. アイデアを教えてください <span class="req">★必須</span></label>
+        <textarea id="q10" rows="5" placeholder="アイデアを自由に記入してください"
                   oninput="onIdeaInput()" required></textarea>
         <div class="feedback-box" id="fb-q10"></div>
       </div>
       <div class="q-block">
         <label class="q-label">Q11. アイデアのカテゴリー（一番近いもの） <span class="req">★必須</span></label>
-        <div class="q-hint">⚡ 一番近いものを選んでください</div>
         <div class="radio-group" id="q11">
           <label><input type="radio" name="q11" value="医療機器・器具の新規開発や改良" onchange="onRadioChange('q11')"> 🔧 医療機器・器具の新規開発や改良</label>
           <label><input type="radio" name="q11" value="アプリ・RPAによる業務自動化・電子化" onchange="onRadioChange('q11')"> 💻 アプリ・RPA（UiPathなど）による業務自動化・電子化</label>
@@ -608,7 +590,7 @@ button:active { transform: scale(0.97); }
 
     <!-- ステップ5：期待される効果 -->
     <div class="block" id="step4">
-      <div class="block-title">📊 第5ステップ：期待できる効果 <span class="badge">O：アウトカム</span></div>
+      <div class="block-title">📊 第5ステップ：期待できる効果</div>
       <div class="q-block">
         <label class="q-label">Q12. このアイデアが実現すると、何が改善しそうですか？ <span class="req">★必須</span>（複数選択可）</label>
         <div class="check-group" id="q12">
@@ -621,21 +603,18 @@ button:active { transform: scale(0.97); }
                         onchange="onCheckChange('q12'); toggleOtherInput('q12-other-check','q12-other-wrap')"> その他</label>
         </div>
         <div class="other-input-wrap" id="q12-other-wrap">
-          <div class="q-hint" style="margin-bottom:6px;">📝 どのような改善が期待できるか教えてください</div>
-          <textarea id="q12-other-text" placeholder="例：患者満足度の向上、スタッフ間のコミュニケーション改善 など" oninput="updateProgress()"></textarea>
+          <textarea id="q12-other-text" placeholder="その他の内容を記入してください" oninput="updateProgress()"></textarea>
         </div>
         <div class="feedback-box" id="fb-q12"></div>
       </div>
       <div class="q-block">
         <label class="q-label">Q13. どのくらい良くなりそうか、わかる範囲で教えてください</label>
-        <div class="q-hint">💬 記入例：1日あたり1時間の業務削減 / インシデントが半減 / 術後離床が1日早まる など<br>数字じゃなくても「体感的に楽になる」程度で大丈夫です</div>
-        <textarea id="q13" placeholder="思いつく範囲で書いてください。数値がなくても問題ありません。"
+        <textarea id="q13" placeholder="改善の規模感を記入してください"
                   oninput="onTextareaInput('q13')"></textarea>
         <div class="feedback-box" id="fb-q13"></div>
       </div>
       <div class="q-block">
         <label class="q-label">Q14. 参考になる写真・資料があればメールに添付してください（任意）</label>
-        <div class="q-hint">📎 現在の問題の様子、参考にしたい製品画像、手書きスケッチなど（JPG・PNG・PDF対応）をメール送信時に直接添付してください。</div>
       </div>
       <div class="nav-btn-row">
         <button type="button" class="btn-prev" onclick="goPrev(4)">← 戻る</button>
@@ -671,14 +650,8 @@ button:active { transform: scale(0.97); }
 <div class="modal-overlay" id="previewModal">
   <div class="modal">
     <h2>📋 入力内容の確認</h2>
-    <p style="font-size:0.85em;color:#666;margin-bottom:12px;">以下の内容で提出します。送信方法を選んでください。</p>
+    <p style="font-size:0.85em;color:#666;margin-bottom:12px;">以下の内容で提出します。内容を確認してメールで送信してください。</p>
     <pre id="previewText"></pre>
-    <div id="picoBox" style="margin-top:14px; padding:14px; background:#edf7f2; border-radius:8px;
-         font-size:0.83em; line-height:1.9; border-left:4px solid #4caf88; display:none;">
-      <strong>🔬 自動まとめ：アイデア実現のためのたたき台（PICO）</strong><br>
-      <span style="font-size:0.82em;color:#555;">※ あなたの入力内容をもとに自動で整理しました。このまま研究や開発の検討に活用させていただきます。</span><br><br>
-      <span id="picoContent"></span>
-    </div>
     <div class="modal-btn-row">
       <button class="btn-mail"  onclick="sendMail()">✉️ メールで送信</button>
       <button class="btn-close" onclick="closePreviewAndThank()">✖ 閉じる</button>
@@ -710,18 +683,12 @@ button:active { transform: scale(0.97); }
 </div>
 
 <script>
-// ============================================================
-//  設定
-// ============================================================
 const MAIL_TO = 'ns.morizo@gmail.com';
 let startTime = null;
 
 const NAME_NG_WORDS = ['匿名', '無記名', 'anonymous', 'anon', '名無し', 'なし', 'ない', 'none', 'no name'];
 
-// ============================================================
-//  UI要素の表示・非表示ヘルパー
-// ============================================================
-const FORM_UI_IDS = ['stepper', 'progressWrap', 'navigator', 'ideaForm'];
+const FORM_UI_IDS = ['stepper', 'progressWrap', 'ideaForm'];
 
 function hideFormUI() {
   FORM_UI_IDS.forEach(id => { document.getElementById(id).style.display = 'none'; });
@@ -730,19 +697,8 @@ function showFormUI() {
   FORM_UI_IDS.forEach(id => { document.getElementById(id).style.display = ''; });
 }
 
-// ============================================================
-//  ステップ管理
-// ============================================================
 let currentStep = 0;
 const TOTAL_STEPS = 5;
-
-const NAV_MESSAGES = [
-  'こんにちは！現場のアイデアやお困りごとを教えてください。<br>まず、<strong>あなたの基本情報</strong>から始めましょう。気軽に入力してください😊',
-  'ありがとうございます！✨<br>次は<strong>現場で困っていること</strong>を教えてください。「誰が」「どんな頻度で」困っているかを、思いつくまま教えてもらえると助かります。',
-  'よく伝わってきます！👍<br>次は<strong>今どのように対応しているか</strong>を教えてください。「とりあえずこうしている」という工夫も、立派な情報です。',
-  'ここからが一番の見どころです！💡<br><strong>あなたが思い描くアイデア</strong>を聞かせてください。どんな小さなひらめきでも大歓迎。完成していなくて大丈夫です！',
-  'アイデア、ありがとうございます！🎉<br>最後に<strong>どんな効果が期待できそうか</strong>を教えてください。数値で書けるとより伝わりやすいですが、感覚的な表現でも問題ありません。'
-];
 
 function showStep(step) {
   document.querySelectorAll('.block').forEach((b, i) => {
@@ -760,14 +716,10 @@ function showStep(step) {
       document.getElementById(`line${i}`).className = 'step-line' + (i < step ? ' done' : '');
     }
   }
-  document.getElementById('navBubble').innerHTML = NAV_MESSAGES[step];
   window.scrollTo({ top: 0, behavior: 'smooth' });
   currentStep = step;
 }
 
-// ============================================================
-//  ステップ検証
-// ============================================================
 function isNGName(val) {
   return NAME_NG_WORDS.some(w => val.toLowerCase() === w.toLowerCase());
 }
@@ -822,9 +774,6 @@ function goNext(step) {
 }
 function goPrev(step) { showStep(step - 1); }
 
-// ============================================================
-//  ユーティリティ
-// ============================================================
 function getVal(id)    { return (document.getElementById(id)||{value:''}).value.trim(); }
 function getRadio(nm)  { const el = document.querySelector(`input[name="${nm}"]:checked`); return el ? el.value : ''; }
 function getChecks(nm) { return [...document.querySelectorAll(`input[name="${nm}"]:checked`)].map(e=>e.value); }
@@ -878,9 +827,6 @@ function toggleOtherInput(checkId, wrapId) {
   }
 }
 
-// ============================================================
-//  プログレスバー（14項目）
-// ============================================================
 function updateProgress() {
   if (!startTime) startTime = new Date();
   const items = [
@@ -897,141 +843,14 @@ function updateProgress() {
 document.addEventListener('change', updateProgress);
 document.addEventListener('input',  updateProgress);
 
-// ============================================================
-//  フィードバック関数群
-// ============================================================
-function onSelectChange(id) {
-  const v = getVal(id);
-  if (v) showFeedback(id, `✅ 「${v}」で登録します！`, 'good');
-  else   hideFeedback(id);
-}
+function onSelectChange(id) {}
+function onTextInput(id) {}
+function onEmailInput(id) {}
+function onRadioChange(name) { highlightSelected(name); }
+function onCheckChange(name) { highlightChecked(name); }
+function onTextareaInput(id) {}
+function onIdeaInput() {}
 
-function onTextInput(id) {
-  const v = getVal(id);
-  if (!v) { hideFeedback(id); return; }
-  if (isNGName(v)) {
-    showFeedback(id, '⚠️ 匿名での受付はできません。お名前をフルネームでご記入ください。', 'neutral');
-    return;
-  }
-  if (v.length < 2) {
-    showFeedback(id, '✏️ お名前をフルネームでご記入ください。', 'neutral');
-    return;
-  }
-  showFeedback(id, `✅ ${v} さん、よろしくお願いします！`, 'good');
-}
-
-function onEmailInput(id) {
-  const v = getVal(id);
-  if (!v) { hideFeedback(id); return; }
-  const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-  if (isEmail) {
-    showFeedback(id, `✅ 「${v}」に検討結果をお送りします！`, 'good');
-  } else {
-    showFeedback(id, '⚠️ メールアドレスの形式を確認してください（例：yamada@example.com）', 'neutral');
-  }
-}
-
-function onRadioChange(name) {
-  highlightSelected(name);
-  const v = getRadio(name);
-  const feedbackMap = {
-    q3: {
-      '医師':'🩺 医師の目線でのアイデア、大変参考になります！',
-      '看護師':'💉 看護師さんの現場感覚には、大切な気づきがたくさんあります！',
-      '薬剤師':'💊 薬剤師さんの専門的な視点が、解決のヒントになることも。',
-      '臨床工学技士':'⚙️ 機器・システム系のご意見も、ぜひ聞かせてください！',
-      '理学療法士・作業療法士':'🏃 リハビリ現場ならではの知恵、ぜひ教えてください！',
-      '事務職':'📋 事務・管理系の改善アイデアも、とても重要です！',
-      'その他':'👤 どんな立場からの声も、大切に受け取ります！'
-    },
-    q4: {
-      '患者さん':'🏥 患者さんのことを考えたアイデア、大切にします！',
-      '自分自身・自部署のスタッフ':'👥 現場で働く方々の声が、改善の出発点です！',
-      '他部署のスタッフ':'🤝 部署をまたいだ連携改善のきっかけになるかもしれません。',
-      '病院全体':'🏢 病院全体の仕組みを変えるアイデアは、大きな影響力があります！'
-    },
-    q5: {
-      '毎日複数回':'🔴 毎日複数回とは、かなり大変な状況ですね。早めの対策が必要そうです。',
-      '毎日1回程度':'🟠 毎日起きているなら、きちんと対処する必要がありますね。',
-      '週に数回':'🟡 週に数回でも、積み重なると大きな負担になりますね。',
-      '月に数回':'🟢 頻度は低くても、事前に対策しておく価値はあります。',
-      '稀だが発生すると重大':'⚠️ 起きたときの影響が大きいなら、優先度の高い課題です！'
-    },
-    q11: {
-      '医療機器・器具の新規開発や改良':'🔧 機器・器具系のアイデアですね！専門担当者と一緒に検討します。',
-      'アプリ・RPAによる業務自動化・電子化':'💻 デジタル化・自動化のアイデアですね！情報システム担当と連携します。',
-      '既存製品の新しい使い方（転用・適応外使用など）':'♻️ 既存品の新しい活用方法ですね！薬事確認も含めて検討します。',
-      '運用ルールやマニュアルの変更':'📄 運用の見直しですね。比較的早く実行できる可能性があります！'
-    }
-  };
-  const msg = (feedbackMap[name] || {})[v];
-  if (msg) showFeedback(name, msg, 'good');
-}
-
-function onCheckChange(name) {
-  highlightChecked(name);
-  const checks = getChecks(name);
-  if (name === 'q6') {
-    if (checks.length === 0) { hideFeedback('q6'); return; }
-    const hasOther = checks.includes('その他');
-    if (checks.length === 1 && hasOther)
-      showFeedback('q6', '📝 下の欄に具体的な内容を記入してください。', 'tip');
-    else if (checks.length === 1)
-      showFeedback('q6', `✅ 「${checks[0]}」を選択しました。他にも当てはまるものがあれば追加してください。`, 'good');
-    else if (checks.length >= 3)
-      showFeedback('q6', `⚡ ${checks.length}つの問題が重なっているんですね。一つのアイデアで複数が改善されると、とても価値があります！`, 'tip');
-    else
-      showFeedback('q6', `✅ ${checks.length}つ選択済み。他にもあれば追加してください。`, 'good');
-  }
-  if (name === 'q9') {
-    if (checks.length === 0) { hideFeedback('q9'); return; }
-    showFeedback('q9', `✅ ${checks.length}つ選択。今の対応の限界がよくわかります。その分、改善の余地が大きいですね！`, 'good');
-  }
-  if (name === 'q12') {
-    if (checks.length === 0) { hideFeedback('q12'); return; }
-    const hasOther = checks.includes('その他');
-    if (checks.length === 1 && hasOther)
-      showFeedback('q12', '📝 下の欄に期待される効果を記入してください。', 'tip');
-    else if (checks.length === 1)
-      showFeedback('q12', `✅ 「${checks[0]}」を選択。この効果を目標に、一緒に検討を進めます！`, 'good');
-    else if (checks.length >= 3)
-      showFeedback('q12', `🚀 ${checks.length}つの改善効果が期待できる、インパクトの大きいアイデアですね！`, 'good');
-    else
-      showFeedback('q12', `✅ ${checks.length}つの改善効果を見込んでいます！`, 'good');
-  }
-}
-
-function onTextareaInput(id) {
-  const v = getVal(id); if (!v) { hideFeedback(id); return; }
-  const len = v.length;
-  if (id === 'q7') {
-    if (len < 20)      showFeedback('q7', '✏️ もう少し詳しく教えてもらえますか？「いつ・どこで・誰が・何が起きる」を意識すると伝わりやすいです。', 'neutral');
-    else if (len < 50) showFeedback('q7', '📝 いい感じです！もう少し具体的な状況を加えると、より伝わりやすくなります。', 'tip');
-    else               showFeedback('q7', '✅ 具体的で分かりやすい場面の説明です！', 'good');
-  }
-  if (id === 'q8') {
-    if (len < 15) showFeedback('q8', '✏️ 現在の対応を少し詳しく教えてください。', 'neutral');
-    else          showFeedback('q8', '✅ 今の工夫がよく伝わります。ありがとうございます！', 'good');
-  }
-  if (id === 'q13') {
-    const hasNum = /[0-9０-９]/.test(v);
-    if (hasNum) showFeedback('q13', '🎯 数値が入っていますね！具体的な目標があると、検討がしやすくなります。', 'good');
-    else        showFeedback('q13', '💬 感覚的な表現でも大丈夫です。数値があるとさらに伝わりやすいですよ！', 'tip');
-  }
-}
-
-function onIdeaInput() {
-  const v = getVal('q10');
-  if (!v) { hideFeedback('q10'); return; }
-  const len = v.length;
-  if (len < 20)      showFeedback('q10', '✏️ もう少し詳しく教えてください。どんなアイデアでも歓迎します！', 'neutral');
-  else if (len < 80) showFeedback('q10', '📝 いい感じです！もう少し具体的なイメージを加えると、さらに伝わりやすくなります。', 'tip');
-  else               showFeedback('q10', '✅ 素晴らしいアイデアですね！具体的で伝わりやすいです。', 'good');
-}
-
-// ============================================================
-//  テキスト生成（メール本文用）
-// ============================================================
 function buildText() {
   const q6v  = getQ6Values();
   const q9v  = getChecks('q9');
@@ -1052,21 +871,21 @@ function buildText() {
     `メールアドレス：${getVal('q2b') || '（未記入）'}`,
     `職　　種　　　：${getRadio('q3') || '（未選択）'}`,
     '',
-    '【P：現場の困りごと・背景】',
+    '【現場の困りごと・背景】',
     `困っている対象：${getRadio('q4') || '（未選択）'}`,
     `発生頻度　　　：${getRadio('q5') || '（未選択）'}`,
     `困りごと・影響：${q6v.join(' / ') || '（未選択）'}`,
     `具体的な場面　：${getVal('q7') || '（未記入）'}`,
     '',
-    '【C：今の対応とその限界】',
+    '【今の対応とその限界】',
     `現在の対応　　　　：${getVal('q8') || '（未記入）'}`,
     `うまくいっていない点：${q9v.length ? q9v.join(' / ') : '特になし'}`,
     '',
-    '【I：アイデア・ひらめき】',
+    '【アイデア・ひらめき】',
     `アイデア内容：${getVal('q10') || '（未記入）'}`,
     `カテゴリー　：${getRadio('q11') || '（未選択）'}`,
     '',
-    '【O：期待できる効果】',
+    '【期待できる効果】',
     `期待される改善：${q12v.join(' / ') || '（未選択）'}`,
     `改善の規模感　：${getVal('q13') || '（未記入）'}`,
     '',
@@ -1078,9 +897,6 @@ function buildText() {
   return lines.join('\n');
 }
 
-// ============================================================
-//  CSV生成
-// ============================================================
 function escapeCSV(v) {
   if (v == null) v = '';
   v = String(v);
@@ -1126,9 +942,6 @@ function buildCsvText() {
   return rows.join('\n');
 }
 
-// ============================================================
-//  メール送信
-// ============================================================
 function sendMail() {
   const humanText = buildText();
   const csvText   = buildCsvText();
@@ -1140,9 +953,6 @@ function sendMail() {
   showThankModal();
 }
 
-// ============================================================
-//  プレビュー表示
-// ============================================================
 function showPreview() {
   const errs = STEP_REQUIRED[4]();
   if (errs.length > 0) {
@@ -1150,23 +960,6 @@ function showPreview() {
     return;
   }
   document.getElementById('previewText').textContent = buildText();
-  const idea     = getVal('q10');
-  const who      = getRadio('q4');
-  const freq     = getRadio('q5');
-  const category = getRadio('q11');
-  const outcomes = getQ12Values();
-  if (idea && who && category && outcomes.length > 0) {
-    const picoText = [
-      `<b>P</b>（対象・背景）：${who}が${freq}`,
-      `<b>I</b>（介入・アイデア）：${idea.slice(0,120)}${idea.length>120?'…':''}`,
-      `<b>C</b>（比較・現状）：${getVal('q8') || '現在の対応'}`,
-      `<b>O</b>（期待する成果）：${outcomes.join('、')}`
-    ].join('<br><br>');
-    document.getElementById('picoContent').innerHTML = picoText;
-    document.getElementById('picoBox').style.display = 'block';
-  } else {
-    document.getElementById('picoBox').style.display = 'none';
-  }
   document.getElementById('previewModal').classList.add('active');
 }
 
@@ -1174,9 +967,6 @@ function closePreviewModal() {
   document.getElementById('previewModal').classList.remove('active');
 }
 
-// ============================================================
-//  感謝モーダル
-// ============================================================
 function showThankModal() {
   const name  = getVal('q2');
   const email = getVal('q2b');
@@ -1192,9 +982,6 @@ function closePreviewAndThank() {
   showThankModal();
 }
 
-// ============================================================
-//  新規アイデア・リセット
-// ============================================================
 function startNewIdea() {
   closeThankModal();
   resetForm();
@@ -1220,9 +1007,6 @@ function resetForm() {
   updateProgress();
 }
 
-// ============================================================
-//  終了画面
-// ============================================================
 function showEndScreen() {
   hideFormUI();
   document.getElementById('endScreen').classList.add('active');
