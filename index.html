@@ -714,6 +714,7 @@ button:active { transform: scale(0.97); }
 //  設定
 // ============================================================
 const MAIL_TO = 'ns.morizo@gmail.com';
+let startTime = null;
 
 const NAME_NG_WORDS = ['匿名', '無記名', 'anonymous', 'anon', '名無し', 'なし', 'ない', 'none', 'no name'];
 
@@ -881,6 +882,7 @@ function toggleOtherInput(checkId, wrapId) {
 //  プログレスバー（14項目）
 // ============================================================
 function updateProgress() {
+  if (!startTime) startTime = new Date();
   const items = [
     getVal('q1'), getVal('q2'), getVal('q2b'),
     getRadio('q3'), getRadio('q4'),
@@ -1028,44 +1030,50 @@ function onIdeaInput() {
 }
 
 // ============================================================
-//  テキスト生成（メール本文用・人間が読みやすい形式）
+//  テキスト生成（メール本文用）
 // ============================================================
 function buildText() {
   const q6v  = getQ6Values();
   const q9v  = getChecks('q9');
   const q12v = getQ12Values();
+  const endTime = new Date();
+  const diffMs  = startTime ? endTime - startTime : 0;
+  const mins    = Math.floor(diffMs / 60000);
+  const secs    = Math.floor((diffMs % 60000) / 1000);
+  const elapsed = startTime ? `${mins}分${secs}秒` : '不明';
   const lines = [
-    '═══════════════════════════════════════',
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
     '　医療をよくするアイデア提案フォーム　',
-    '═══════════════════════════════════════',
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
     '',
     '【基本情報】',
-    `所属部署　：${getVal('q1')}`,
-    `氏　　名　：${getVal('q2')}`,
-    `メールアドレス：${getVal('q2b')}`,
-    `職　　種　：${getRadio('q3')}`,
+    `所属部署　　　：${getVal('q1') || '（未選択）'}`,
+    `氏　　名　　　：${getVal('q2') || '（未記入）'}`,
+    `メールアドレス：${getVal('q2b') || '（未記入）'}`,
+    `職　　種　　　：${getRadio('q3') || '（未選択）'}`,
     '',
     '【P：現場の困りごと・背景】',
-    `困っている対象：${getRadio('q4')}`,
-    `発生頻度　：${getRadio('q5')}`,
-    `困りごと・影響：${q6v.join(' / ')}`,
-    `具体的な場面：${getVal('q7')}`,
+    `困っている対象：${getRadio('q4') || '（未選択）'}`,
+    `発生頻度　　　：${getRadio('q5') || '（未選択）'}`,
+    `困りごと・影響：${q6v.join(' / ') || '（未選択）'}`,
+    `具体的な場面　：${getVal('q7') || '（未記入）'}`,
     '',
     '【C：今の対応とその限界】',
-    `現在の対応：${getVal('q8')}`,
+    `現在の対応　　　　：${getVal('q8') || '（未記入）'}`,
     `うまくいっていない点：${q9v.length ? q9v.join(' / ') : '特になし'}`,
     '',
     '【I：アイデア・ひらめき】',
-    `アイデア内容：${getVal('q10')}`,
-    `カテゴリー　：${getRadio('q11')}`,
+    `アイデア内容：${getVal('q10') || '（未記入）'}`,
+    `カテゴリー　：${getRadio('q11') || '（未選択）'}`,
     '',
     '【O：期待できる効果】',
-    `期待される改善：${q12v.join(' / ')}`,
-    `改善の規模感　：${getVal('q13')}`,
+    `期待される改善：${q12v.join(' / ') || '（未選択）'}`,
+    `改善の規模感　：${getVal('q13') || '（未記入）'}`,
     '',
-    '───────────────────────────────────────',
-    `提出日時：${new Date().toLocaleString('ja-JP')}`,
-    '───────────────────────────────────────',
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+    `送信日時　　　　：${endTime.toLocaleString('ja-JP')}`,
+    `レポート作成時間：${elapsed}`,
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
   ];
   return lines.join('\n');
 }
@@ -1089,7 +1097,11 @@ function buildCsvText() {
   const q6v  = getQ6Values();
   const q9v  = getChecks('q9');
   const q12v = getQ12Values();
-  const rows = [['submissionid','submittedat','fieldname','value']];
+  const diffMs = startTime ? now - startTime : 0;
+  const mins   = Math.floor(diffMs / 60000);
+  const secs   = Math.floor((diffMs % 60000) / 1000);
+  const elapsed = startTime ? `${mins}分${secs}秒` : '不明';
+  const rows = [['submissionid','submittedat','fieldname','value'].join(',')];
   function addRow(fieldName, value) {
     rows.push([escapeCSV(submissionId), escapeCSV(submittedAt), escapeCSV(fieldName), escapeCSV(value)].join(','));
   }
@@ -1110,6 +1122,7 @@ function buildCsvText() {
   if (q12v.length > 0) { q12v.forEach((v, idx) => addRow(`q12_outcome_${idx+1}`, v)); }
   else addRow('q12_outcome_1', '');
   addRow('q13_expected_improvement', getVal('q13'));
+  addRow('report_creation_time', elapsed);
   return rows.join('\n');
 }
 
@@ -1200,6 +1213,7 @@ function resetForm() {
     const ta = w.querySelector('textarea');
     if (ta) ta.value = '';
   });
+  startTime = null;
   showFormUI();
   document.getElementById('endScreen').classList.remove('active');
   showStep(0);
