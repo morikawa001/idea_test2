@@ -675,6 +675,10 @@ button:active { transform: scale(0.97); }
     <div class="thank-reply-box">
       📧 返信先：<span class="reply-email" id="thank-reply-email"></span>
     </div>
+    <!-- ① カウントダウン表示を追加 -->
+    <p id="close-countdown-wrap" style="font-size:0.82em; color:#888; margin-bottom:12px;">
+      <span id="close-countdown">3</span> 秒後に自動的に閉じます
+    </p>
     <div class="thank-btn-row">
       <button class="btn-new-idea" onclick="startNewIdea()">💡 新しいアイデアを提案する</button>
       <button class="btn-just-close" onclick="closeThankModal()">このまま閉じる</button>
@@ -943,6 +947,7 @@ function buildCsvText() {
   return rows.join('\n');
 }
 
+// ② sendMail() に startCloseCountdown(3) を追加
 function sendMail() {
   const humanText = buildText();
   const csvText   = buildCsvText();
@@ -954,6 +959,30 @@ function sendMail() {
   window.location.href = `mailto:${MAIL_TO}?subject=${subject}&body=${body}`;
   closePreviewModal();
   showThankModal();
+  startCloseCountdown(3); // ← 追加
+}
+
+// ② カウントダウン関数を追加
+function startCloseCountdown(seconds) {
+  let remaining = seconds;
+  const countdownEl = document.getElementById('close-countdown');
+  if (countdownEl) countdownEl.textContent = remaining;
+
+  const timer = setInterval(() => {
+    remaining--;
+    if (countdownEl) countdownEl.textContent = remaining;
+    if (remaining <= 0) {
+      clearInterval(timer);
+      window.close();
+      setTimeout(() => {
+        const thankModal = document.getElementById('thankModal');
+        if (thankModal && thankModal.classList.contains('active')) {
+          closeThankModal();
+          showEndScreen();
+        }
+      }, 300);
+    }
+  }, 1000);
 }
 
 function showPreview() {
@@ -1021,6 +1050,7 @@ function restartFromEnd() {
   document.getElementById('endScreen').classList.remove('active');
   resetForm();
 }
+
 // ============================================================
 //  GAS トラッキング
 // ============================================================
